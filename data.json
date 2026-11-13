@@ -1,0 +1,448 @@
+{
+  "squad": [
+    {
+      "id": "p1",
+      "name": "Olivia Giles",
+      "position": "GK",
+      "number": 1,
+      "active": true
+    },
+    {
+      "id": "p2",
+      "name": "Ellie M Bishop",
+      "number": 5,
+      "position": "DF",
+      "active": true
+    },
+    {
+      "id": "p3",
+      "name": "Shana Dolbel",
+      "number": 14,
+      "position": "AT",
+      "active": true
+    },
+    {
+      "id": "p4",
+      "name": "Kiesha Walker",
+      "number": 15,
+      "position": "DF",
+      "active": true
+    },
+    {
+      "id": "p5",
+      "name": "Aliyat Lambe",
+      "number": 4,
+      "position": "DF",
+      "active": true
+    },
+    {
+      "id": "p6",
+      "name": "Farrah Ambrose",
+      "number": 18,
+      "position": "MF",
+      "active": true
+    },
+    {
+      "id": "p7",
+      "name": "Kennedy Garside",
+      "number": 17,
+      "position": "MF",
+      "active": true
+    },
+    {
+      "id": "p8",
+      "name": "Chloe Ingrouille",
+      "number": 21,
+      "position": "AT",
+      "active": true
+    },
+    {
+      "id": "p9",
+      "name": "Khloe Reed",
+      "number": 25,
+      "position": "DF",
+      "active": true
+    },
+    {
+      "id": "p10",
+      "name": "Millie Pullen",
+      "position": "DF",
+      "number": 3,
+      "active": true
+    },
+    {
+      "id": "p12",
+      "name": "Katie Dickson",
+      "position": "MF",
+      "number": 14,
+      "active": true
+    },
+    {
+      "id": "p_1794437338938",
+      "name": "Saskia Worrall",
+      "number": 22,
+      "position": "GK",
+      "active": true
+    },
+    {
+      "id": "p_1794437356583",
+      "name": "Aimee Walters",
+      "number": 29,
+      "position": "GK",
+      "active": true
+    },
+    {
+      "id": "p_1794437379621",
+      "name": "Cadi Rogers",
+      "number": 2,
+      "position": "DF",
+      "active": true
+    },
+    {
+      "id": "p_1794437394254",
+      "name": "Libby Gimson",
+      "number": 3,
+      "position": "DF",
+      "active": true
+    },
+    {
+      "id": "p_1794437529039",
+      "name": "Phoebe Bettey",
+      "number": 23,
+      "position": "DF",
+      "active": true
+    },
+    {
+      "id": "p_1794437569493",
+      "name": "Hanna Bennett",
+      "number": 6,
+      "position": "MF",
+      "active": true
+    },
+    {
+      "id": "p_1794437587864",
+      "name": "Sienna Gilbert",
+      "number": 16,
+      "position": "MF",
+      "active": true
+    },
+    {
+      "id": "p_1794437660678",
+      "name": "Brooklyn Brothers",
+      "number": 19,
+      "position": "MF",
+      "active": true
+    },
+    {
+      "id": "p_1794437683458",
+      "name": "Ciara Magee",
+      "number": 20,
+      "position": "MF",
+      "active": true
+    },
+    {
+      "id": "p_1794437702194",
+      "name": "Ellie J Bishop",
+      "number": 24,
+      "position": "MF",
+      "active": true
+    },
+    {
+      "id": "p_1794437724223",
+      "name": "Millie Pullen",
+      "number": 7,
+      "position": "AT",
+      "active": true
+    },
+    {
+      "id": "p_1794437744367",
+      "name": "Laura Curnock",
+      "number": 9,
+      "position": "AT",
+      "active": true
+    },
+    {
+      "id": "p_1794437808681",
+      "name": "Lily Coaker",
+      "number": 30,
+      "position": "AT",
+      "active": true
+    },
+    {
+      "id": "p_1794438767963",
+      "name": "Mia Burrows",
+      "number": 26,
+      "position": "DF",
+      "active": true
+    }
+  ],
+  "matches": [
+    {
+      "id": "m_1794522600244",
+      "opponent": "Fulham",
+      "date": "2026-08-30",
+      "competition": "FAWNL Premier",
+      "venue": "Away",
+      "scoreArgyle": 0,
+      "scoreOpponent": 5,
+      "stadium": "Motspur Park",
+      "captainId": "p2",
+      "startingXi": [
+        "p1",
+        "p2",
+        "p3",
+        "p4",
+        "p5",
+        "p7",
+        "p8",
+        "p9",
+        "p_1794437587864",
+        "p_1794437702194",
+        "p_1794437744367"
+      ],
+      "unusedSubs": [
+        "p6",
+        "p_1794437356583",
+        "p_1794437529039",
+        "p_1794438767963"
+      ],
+      "usedSubs": [],
+      "events": [
+        {
+          "id": "e_1794522502832",
+          "type": "SUB",
+          "minute": 59,
+          "playerId": "p6",
+          "subOutId": "p2",
+          "detail": ""
+        },
+        {
+          "id": "e_1794522520086",
+          "type": "SUB",
+          "minute": 77,
+          "playerId": "p_1794437529039",
+          "subOutId": "p8",
+          "detail": ""
+        },
+        {
+          "id": "e_1794522571648",
+          "type": "SUB",
+          "minute": 82,
+          "playerId": "p_1794438767963",
+          "subOutId": "p_1794437702194",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "m_1794520526022",
+      "opponent": "Marine Academy",
+      "date": "2026-08-26",
+      "competition": "FAWNL Cup",
+      "venue": "Home",
+      "scoreArgyle": 2,
+      "scoreOpponent": 1,
+      "stadium": "Erme Valley",
+      "captainId": "p5",
+      "startingXi": [
+        "p1",
+        "p3",
+        "p4",
+        "p5",
+        "p6",
+        "p8",
+        "p9",
+        "p_1794437587864",
+        "p_1794437683458",
+        "p_1794437702194",
+        "p_1794437744367"
+      ],
+      "unusedSubs": [
+        "p7",
+        "p_1794437529039",
+        "p_1794437808681",
+        "p_1794438767963"
+      ],
+      "usedSubs": [],
+      "events": [
+        {
+          "id": "e_1794520425297",
+          "type": "GOAL",
+          "minute": 76,
+          "playerId": "p9",
+          "subOutId": "p2",
+          "detail": "Normal"
+        },
+        {
+          "id": "e_1794520459125",
+          "type": "GOAL",
+          "minute": 72,
+          "playerId": "p3",
+          "subOutId": "p2",
+          "detail": "Normal"
+        },
+        {
+          "id": "e_1794520487925",
+          "type": "SUB",
+          "minute": 81,
+          "playerId": "p7",
+          "subOutId": "p8",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "m_1794519751617",
+      "opponent": "AFC Wimbledon",
+      "date": "2026-08-23",
+      "competition": "FAWNL Premier",
+      "venue": "Home",
+      "scoreArgyle": 0,
+      "scoreOpponent": 6,
+      "stadium": "Home Park",
+      "captainId": "p2",
+      "startingXi": [
+        "p1",
+        "p2",
+        "p3",
+        "p4",
+        "p5",
+        "p6",
+        "p8",
+        "p9",
+        "p_1794437587864",
+        "p_1794437702194",
+        "p_1794437744367"
+      ],
+      "unusedSubs": [
+        "p7",
+        "p_1794437529039",
+        "p_1794437683458",
+        "p_1794437808681",
+        "p_1794438767963"
+      ],
+      "usedSubs": [],
+      "events": [
+        {
+          "id": "e_1794519556401",
+          "type": "SUB",
+          "minute": 78,
+          "playerId": "p_1794438767963",
+          "subOutId": "p2",
+          "detail": ""
+        },
+        {
+          "id": "e_1794519593348",
+          "type": "SUB",
+          "minute": 83,
+          "playerId": "p_1794437529039",
+          "subOutId": "p9",
+          "detail": ""
+        },
+        {
+          "id": "e_1794519621329",
+          "type": "SUB",
+          "minute": 89,
+          "playerId": "p_1794437808681",
+          "subOutId": "p_1794437744367",
+          "detail": ""
+        },
+        {
+          "id": "e_1794519671736",
+          "type": "SUB",
+          "minute": 58,
+          "playerId": "p_1794437683458",
+          "subOutId": "p_1794437702194",
+          "detail": ""
+        },
+        {
+          "id": "e_1794519713808",
+          "type": "SUB",
+          "minute": 62,
+          "playerId": "p7",
+          "subOutId": "p_1794437587864",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "m_1794438472390",
+      "opponent": "Swindon Town",
+      "date": "2016-08-16",
+      "competition": "FAWNL Premier",
+      "venue": "Away",
+      "scoreArgyle": 2,
+      "scoreOpponent": 4,
+      "stadium": "The Nigel Eady County Ground",
+      "captainId": "p2",
+      "startingXi": [
+        "p1",
+        "p2",
+        "p3",
+        "p4",
+        "p5",
+        "p6",
+        "p7",
+        "p9",
+        "p_1794437587864",
+        "p_1794437683458",
+        "p_1794437744367"
+      ],
+      "unusedSubs": [
+        "p8",
+        "p_1794437356583",
+        "p_1794437529039",
+        "p_1794437808681",
+        "p_1794438767963"
+      ],
+      "usedSubs": [],
+      "events": [
+        {
+          "id": "e_1794438227968",
+          "type": "CARD",
+          "minute": 16,
+          "playerId": "p5",
+          "detail": ""
+        },
+        {
+          "id": "e_1794438283223",
+          "type": "SUB",
+          "minute": 70,
+          "playerId": "p_1794437529039",
+          "detail": "Kennedy Garside",
+          "subOutId": "p7"
+        },
+        {
+          "id": "e_1794438363616",
+          "type": "GOAL",
+          "minute": 28,
+          "playerId": "p2",
+          "detail": ""
+        },
+        {
+          "id": "e_1794438390254",
+          "type": "SUB",
+          "minute": 64,
+          "playerId": "p8",
+          "detail": "Sienna Gilbert",
+          "subOutId": "p_1794437587864"
+        },
+        {
+          "id": "e_1794438460158",
+          "type": "GOAL",
+          "minute": 4,
+          "playerId": "p3",
+          "detail": ""
+        },
+        {
+          "id": "e_1794442634475",
+          "type": "GOAL",
+          "minute": 90,
+          "playerId": "p8",
+          "subOutId": "p2",
+          "detail": "Penalty"
+        }
+      ]
+    }
+  ]
+}

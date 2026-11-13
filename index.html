@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plymouth Argyle FC - Match Centre</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            argyle: {
+              green: '#004731',
+              dark: '#002B1D',
+              gold: '#D4AF37',
+              accent: '#10B981'
+            }
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans">
+
+  <!-- Header -->
+  <header class="bg-argyle-dark border-b border-argyle-gold/30 shadow-xl sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between items-center gap-4">
+      <div class="flex items-center gap-3">
+        <!-- Replaced PA circle with Argyle Crest image placeholder -->
+        <div class="w-12 h-12 rounded-full bg-argyle-green flex items-center justify-center border-2 border-argyle-gold overflow-hidden shadow-md bg-white/5">
+          <img src="logo.svg.webp" alt="Plymouth Argyle Crest" class="w-10 h-10 object-contain" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'text-argyle-gold font-bold text-lg\'>PA</span>';">
+        </div>
+        <div>
+          <h1 class="text-xl font-bold text-white tracking-wide">PLYMOUTH ARGYLE</h1>
+          <p class="text-xs text-argyle-gold uppercase font-semibold tracking-wider">Official Match & Squad Tracker</p>
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <button onclick="switchTab('matches')" id="tab-matches" class="px-4 py-2 rounded-lg font-medium text-sm transition bg-argyle-green text-white shadow-md border border-argyle-gold/40">
+          <i class="fa-solid fa-calendar-days mr-2"></i>Match Centre
+        </button>
+        <button onclick="switchTab('squad')" id="tab-squad" class="px-4 py-2 rounded-lg font-medium text-sm transition bg-slate-800 text-slate-300 hover:text-white border border-slate-700">
+          <i class="fa-solid fa-users mr-2"></i>Squad & Stats
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full">
+    
+    <!-- Loading / Error Banner -->
+    <div id="status-banner" class="hidden mb-6 p-4 rounded-xl border"></div>
+
+    <!-- MATCHES TAB -->
+    <section id="view-matches" class="space-y-6">
+      <div class="flex flex-wrap justify-between items-center gap-4 bg-slate-800/80 p-4 rounded-xl border border-slate-700">
+        <h2 class="text-lg font-semibold text-white flex items-center gap-2">
+          <i class="fa-solid fa-trophy text-argyle-gold"></i> Fixtures & Results
+        </h2>
+        <div class="flex items-center gap-2">
+          <label class="text-xs text-slate-400 font-medium">Filter:</label>
+          <select id="competition-filter" onchange="renderMatches()" class="bg-slate-900 border border-slate-700 text-sm rounded-lg px-3 py-1.5 text-slate-200 focus:outline-none focus:border-argyle-gold">
+            <option value="ALL">All Competitions</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="matches-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Matches dynamically inserted -->
+      </div>
+    </section>
+
+    <!-- SQUAD TAB -->
+    <section id="view-squad" class="hidden space-y-6">
+      <div class="flex flex-wrap justify-between items-center gap-4 bg-slate-800/80 p-4 rounded-xl border border-slate-700">
+        <h2 class="text-lg font-semibold text-white flex items-center gap-2">
+          <i class="fa-solid fa-chart-line text-argyle-gold"></i> Player Statistics
+        </h2>
+        <div class="flex gap-2">
+          <button onclick="filterSquad('ALL')" class="pos-filter-btn px-3 py-1 rounded bg-argyle-green text-xs font-semibold text-white">All</button>
+          <button onclick="filterSquad('GK')" class="pos-filter-btn px-3 py-1 rounded bg-slate-700 text-xs font-semibold text-slate-300">GK</button>
+          <button onclick="filterSquad('DF')" class="pos-filter-btn px-3 py-1 rounded bg-slate-700 text-xs font-semibold text-slate-300">DF</button>
+          <button onclick="filterSquad('MF')" class="pos-filter-btn px-3 py-1 rounded bg-slate-700 text-xs font-semibold text-slate-300">MF</button>
+          <button onclick="filterSquad('AT')" class="pos-filter-btn px-3 py-1 rounded bg-slate-700 text-xs font-semibold text-slate-300">FW</button>
+        </div>
+      </div>
+
+      <!-- Scroll hint for small screens 
+      <div class="text-right text-xs text-argyle-gold animate-pulse flex items-center justify-end gap-1 px-1">
+        <span>Scroll horizontally to see more stats</span> <i class="fa-solid fa-arrow-right"></i>
+      </div>. -->
+
+      <div class="overflow-x-auto bg-slate-800/60 rounded-xl border border-slate-700 shadow-xl relative">
+        <table class="w-full text-left text-sm text-slate-300 whitespace-nowrap">
+          <thead class="bg-slate-800 text-xs uppercase text-slate-400 font-semibold border-b border-slate-700 select-none">
+            <tr>
+              <th onclick="sortSquad('number')" class="py-3 px-4 cursor-pointer hover:text-argyle-gold"># <i class="fa-solid fa-sort ml-1 text-[10px]"></i></th>
+              <th onclick="sortSquad('name')" class="py-3 px-4 cursor-pointer hover:text-argyle-gold">Player <i class="fa-solid fa-sort ml-1 text-[10px]"></i></th>
+              <th onclick="sortSquad('position')" class="py-3 px-4 text-center cursor-pointer hover:text-argyle-gold">Pos <i class="fa-solid fa-sort ml-1 text-[10px]"></i></th>
+              <th onclick="sortSquad('totalApps')" class="py-3 px-4 text-center cursor-pointer hover:text-argyle-gold">Apps (Starts/Sub) <i class="fa-solid fa-sort ml-1 text-[10px]"></i></th>
+              <th onclick="sortSquad('goalsCount')" class="py-3 px-4 text-center cursor-pointer hover:text-argyle-gold text-argyle-gold">Goals <i class="fa-solid fa-sort ml-1 text-[10px]"></i></th>
+              <th onclick="sortSquad('cleanSheets')" class="py-3 px-4 text-center cursor-pointer hover:text-argyle-gold text-emerald-400">CS <i class="fa-solid fa-sort ml-1 text-[10px]"></i></th>
+              <th onclick="sortSquad('yc')" class="py-3 px-4 text-center cursor-pointer hover:text-argyle-gold text-yellow-400">YC <i class="fa-solid fa-sort ml-1 text-[10px]"></i></th>
+              <th onclick="sortSquad('rc')" class="py-3 px-4 text-center cursor-pointer hover:text-argyle-gold text-red-500">RC <i class="fa-solid fa-sort ml-1 text-[10px]"></i></th>
+            </tr>
+          </thead>
+          <tbody id="squad-table-body" class="divide-y divide-slate-700/50">
+            <!-- Dynamic rows -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MATCH DETAILS MODAL -->
+  <div id="match-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 hidden">
+    <div class="bg-slate-800 rounded-2xl max-w-3xl w-full max-h-[90vh] flex flex-col border border-slate-700 shadow-2xl overflow-hidden">
+      <!-- Modal Header -->
+      <div class="bg-argyle-dark p-6 border-b border-argyle-gold/30 relative">
+        <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2">
+          <i class="fa-solid fa-xmark text-xl"></i>
+        </button>
+        <div id="modal-match-header" class="text-center"></div>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-6 overflow-y-auto space-y-6">
+        <div>
+          <h3 class="text-sm font-semibold text-argyle-gold uppercase tracking-wider mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-clock-rotate-left"></i> Match Events
+          </h3>
+          <div id="modal-events-list" class="space-y-2"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-slate-700">
+          <div>
+            <h3 class="text-sm font-semibold text-argyle-gold uppercase tracking-wider mb-3 flex items-center gap-2">
+              <i class="fa-solid fa-shirt"></i> Starting XI
+            </h3>
+            <ul id="modal-starting-xi" class="space-y-1.5 text-sm"></ul>
+          </div>
+          <div>
+            <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-2">
+              <i class="fa-solid fa-user-group"></i> Substitutes
+            </h3>
+            <div class="space-y-3">
+              <div>
+                <p class="text-xs text-emerald-400 font-semibold mb-1 uppercase">Used Subs</p>
+                <ul id="modal-used-subs" class="space-y-1.5 text-sm"></ul>
+              </div>
+              <div>
+                <p class="text-xs text-slate-500 font-semibold mb-1 uppercase">Unused Subs</p>
+                <ul id="modal-unused-subs" class="space-y-1 text-xs text-slate-400"></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let appData = { squad: [], matches: [] };
+    let currentPosFilter = 'ALL';
+    let currentSort = { field: 'number', asc: true };
+
+    async function init() {
+      try {
+        const res = await fetch('data.json');
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+        appData = await res.json();
+        populateFilters();
+        renderMatches();
+        renderSquad();
+      } catch (err) {
+        showStatus('Could not load match data (data.json). Ensure the file is present in your root folder.', 'error');
+      }
+    }
+
+    function showStatus(msg, type) {
+      const banner = document.getElementById('status-banner');
+      banner.classList.remove('hidden', 'bg-red-900/50', 'border-red-500', 'text-red-200');
+      if (type === 'error') {
+        banner.classList.add('bg-red-900/50', 'border-red-500', 'text-red-200');
+        banner.innerHTML = `<i class="fa-solid fa-circle-exclamation mr-2"></i> ${msg}`;
+      }
+    }
+
+    function switchTab(tab) {
+      document.getElementById('view-matches').classList.toggle('hidden', tab !== 'matches');
+      document.getElementById('view-squad').classList.toggle('hidden', tab !== 'squad');
+      document.getElementById('tab-matches').className = tab === 'matches'
+        ? 'px-4 py-2 rounded-lg font-medium text-sm transition bg-argyle-green text-white shadow-md border border-argyle-gold/40'
+        : 'px-4 py-2 rounded-lg font-medium text-sm transition bg-slate-800 text-slate-300 hover:text-white border border-slate-700';
+      document.getElementById('tab-squad').className = tab === 'squad'
+        ? 'px-4 py-2 rounded-lg font-medium text-sm transition bg-argyle-green text-white shadow-md border border-argyle-gold/40'
+        : 'px-4 py-2 rounded-lg font-medium text-sm transition bg-slate-800 text-slate-300 hover:text-white border border-slate-700';
+    }
+
+    function populateFilters() {
+      const comps = [...new Set(appData.matches.map(m => m.competition))];
+      const select = document.getElementById('competition-filter');
+      select.innerHTML = '<option value="ALL">All Competitions</option>';
+      comps.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c;
+        opt.textContent = c;
+        select.appendChild(opt);
+      });
+    }
+
+    function renderMatches() {
+      const grid = document.getElementById('matches-grid');
+      const filter = document.getElementById('competition-filter').value;
+      const filtered = appData.matches.filter(m => filter === 'ALL' || m.competition === filter);
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-500"><i class="fa-solid fa-folder-open text-3xl mb-2"></i><p>No matches recorded yet.</p></div>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(m => {
+        const resultColor = m.scoreArgyle > m.scoreOpponent ? 'text-emerald-400 border-emerald-500/30' :
+                            m.scoreArgyle < m.scoreOpponent ? 'text-rose-400 border-rose-500/30' : 'text-amber-400 border-amber-500/30';
+        const resultLabel = m.scoreArgyle > m.scoreOpponent ? 'W' : m.scoreArgyle < m.scoreOpponent ? 'L' : 'D';
+
+        // Determine Home vs Away team names & scores based on venue property
+        const homeTeam = m.venue === 'Home' ? 'Plymouth Argyle' : m.opponent;
+        const awayTeam = m.venue === 'Home' ? m.opponent : 'Plymouth Argyle';
+        const homeScore = m.venue === 'Home' ? m.scoreArgyle : m.scoreOpponent;
+        const awayScore = m.venue === 'Home' ? m.scoreOpponent : m.scoreArgyle;
+
+        return `
+          <div onclick="openMatchModal('${m.id}')" class="bg-slate-800 rounded-xl border border-slate-700 hover:border-argyle-gold/50 transition cursor-pointer overflow-hidden shadow-lg hover:shadow-xl group">
+            <div class="bg-slate-800/90 px-4 py-2.5 border-b border-slate-700/80 flex justify-between items-center text-xs">
+              <span class="text-slate-400 font-medium">${m.date}</span>
+              <span class="px-2 py-0.5 rounded bg-slate-700 text-argyle-gold font-semibold">${m.competition}</span>
+            </div>
+            <div class="p-5">
+              <div class="flex justify-between items-center mb-4 gap-2">
+                <div class="text-left flex-1 min-w-0">
+                  <h3 class="font-bold text-sm sm:text-base text-white group-hover:text-argyle-gold transition truncate" title="${homeTeam}">${homeTeam}</h3>
+                </div>
+                <div class="px-2 text-center shrink-0">
+                  <div class="text-lg sm:text-2xl font-black text-white bg-slate-900/80 px-3 py-1 rounded-lg border border-slate-700 tracking-wider">
+                    ${homeScore} - ${awayScore}
+                  </div>
+                  <span class="text-[10px] font-bold px-2 py-0.5 rounded ${resultColor} bg-slate-900 border mt-1 inline-block">${resultLabel}</span>
+                </div>
+                <div class="text-right flex-1 min-w-0">
+                  <h3 class="font-bold text-sm sm:text-base text-white group-hover:text-argyle-gold transition truncate" title="${awayTeam}">${awayTeam}</h3>
+                </div>
+              </div>
+              <div class="text-xs text-slate-400 flex justify-between items-center pt-3 border-t border-slate-700/60">
+                <span><i class="fa-solid fa-location-dot mr-1"></i>${m.stadium || 'TBC'}</span>
+                <span class="text-argyle-gold font-medium group-hover:translate-x-1 transition flex items-center gap-1">Details <i class="fa-solid fa-chevron-right text-[10px]"></i></span>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function openMatchModal(matchId) {
+      const m = appData.matches.find(item => item.id === matchId);
+      if (!m) return;
+
+      const playerMap = new Map(appData.squad.map(p => [p.id, p]));
+
+      const homeTeam = m.venue === 'Home' ? 'Plymouth Argyle' : m.opponent;
+      const awayTeam = m.venue === 'Home' ? m.opponent : 'Plymouth Argyle';
+      const homeScore = m.venue === 'Home' ? m.scoreArgyle : m.scoreOpponent;
+      const awayScore = m.venue === 'Home' ? m.scoreOpponent : m.scoreArgyle;
+
+      // Header
+      document.getElementById('modal-match-header').innerHTML = `
+        <span class="text-xs text-argyle-gold font-bold uppercase tracking-widest">${m.competition} • ${m.date}</span>
+        <div class="flex justify-center items-center gap-4 sm:gap-6 my-2">
+          <span class="text-base sm:text-xl font-bold text-white text-right flex-1">${homeTeam}</span>
+          <span class="text-2xl sm:text-3xl font-black text-argyle-gold px-3 sm:px-4 py-1 bg-slate-900/90 rounded-xl border border-argyle-gold/30 shrink-0">${homeScore} - ${awayScore}</span>
+          <span class="text-base sm:text-xl font-bold text-white text-left flex-1">${awayTeam}</span>
+        </div>
+        <p class="text-xs text-slate-400"><i class="fa-solid fa-location-dot mr-1"></i>${m.stadium || 'N/A'}</p>
+      `;
+
+      // Timeline Events
+      const eventsContainer = document.getElementById('modal-events-list');
+      if (!m.events || m.events.length === 0) {
+        eventsContainer.innerHTML = '<p class="text-xs text-slate-500 italic">No key events logged for this match.</p>';
+      } else {
+        const sorted = [...m.events].sort((a, b) => a.minute - b.minute);
+        eventsContainer.innerHTML = sorted.map(ev => {
+          const p = playerMap.get(ev.playerId);
+          const name = p ? p.name : 'Unknown Player';
+
+          if (ev.type === 'GOAL') {
+            const isPen = ev.detail === 'Penalty';
+            const isOG = ev.detail === 'Own Goal';
+            return `
+              <div class="flex items-center gap-3 bg-slate-900/60 p-2.5 rounded-lg border border-slate-700/80 text-sm">
+                <span class="w-8 text-center text-xs font-bold text-slate-400">${ev.minute}'</span>
+                <span class="relative inline-flex items-center justify-center">
+                  <i class="fa-solid fa-futbol text-emerald-400 text-base"></i>
+                  ${isPen ? '<span class="absolute -bottom-1 -right-1 bg-argyle-gold text-slate-950 font-black text-[9px] w-3.5 h-3.5 rounded-full flex items-center justify-center border border-slate-900">P</span>' : ''}
+                </span>
+                <div>
+                  <span class="font-medium text-white">${name}</span>
+                  ${isPen ? '<span class="text-xs text-emerald-400 ml-1.5 font-semibold">(Penalty)</span>' : ''}
+                  ${isOG ? '<span class="text-xs text-rose-400 ml-1.5 font-semibold">(Own Goal)</span>' : ''}
+                  ${ev.detail && !['Penalty', 'Own Goal'].includes(ev.detail) ? `<span class="text-xs text-slate-400 block">Assist: ${ev.detail}</span>` : ''}
+                </div>
+              </div>
+            `;
+          } else if (ev.type === 'SUB') {
+            const subOutP = ev.subOutId ? playerMap.get(ev.subOutId) : null;
+            const subOutName = subOutP ? subOutP.name : (ev.detail || 'Off');
+            return `
+              <div class="flex items-center gap-3 bg-slate-900/60 p-2.5 rounded-lg border border-slate-700/80 text-sm">
+                <span class="w-8 text-center text-xs font-bold text-slate-400">${ev.minute}'</span>
+                <i class="fa-solid fa-repeat text-amber-400 text-sm"></i>
+                <div class="flex items-center gap-2 flex-wrap">
+                  <span class="text-emerald-400 font-medium inline-flex items-center bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-500/30">
+                    <i class="fa-solid fa-arrow-up text-xs mr-1"></i>${name}
+                  </span>
+                  <span class="text-slate-500 text-xs">for</span>
+                  <span class="text-rose-400 font-medium inline-flex items-center bg-rose-950/40 px-2 py-0.5 rounded border border-rose-500/30">
+                    <i class="fa-solid fa-arrow-down text-xs mr-1"></i>${subOutName}
+                  </span>
+                </div>
+              </div>
+            `;
+          } else if (ev.type === 'CARD') {
+            const isRed = ev.detail === 'Red';
+            return `
+              <div class="flex items-center gap-3 bg-slate-900/60 p-2.5 rounded-lg border border-slate-700/80 text-sm">
+                <span class="w-8 text-center text-xs font-bold text-slate-400">${ev.minute}'</span>
+                <span class="w-3.5 h-5 rounded-sm ${isRed ? 'bg-red-600' : 'bg-yellow-400'} inline-block shadow"></span>
+                <span class="font-medium text-white">${name} <span class="text-xs text-slate-400 font-normal">(${isRed ? 'Red Card' : 'Yellow Card'})</span></span>
+              </div>
+            `;
+          }
+          return '';
+        }).join('');
+      }
+
+      // Starting XI List with individual match event badges (Goals, Cards, Sub Off)
+      const startingUl = document.getElementById('modal-starting-xi');
+      startingUl.innerHTML = (m.startingXi || []).map(id => {
+        const p = playerMap.get(id);
+        if (!p) return '';
+        const isCap = m.captainId === id;
+
+        const playerGoals = (m.events || []).filter(e => e.type === 'GOAL' && e.playerId === id);
+        const goalsHtml = playerGoals.map(g => {
+          const isPen = g.detail === 'Penalty';
+          return `
+            <span class="relative inline-flex items-center justify-center ml-1" title="${isPen ? 'Penalty Goal (' + g.minute + '\')' : 'Goal (' + g.minute + '\')'}">
+              <i class="fa-solid fa-futbol text-emerald-400 text-xs"></i>
+              ${isPen ? '<span class="absolute -bottom-1 -right-1 bg-argyle-gold text-slate-950 font-black text-[7px] w-2.5 h-2.5 rounded-full flex items-center justify-center border border-slate-900">P</span>' : ''}
+            </span>
+          `;
+        }).join('');
+
+        const playerCard = (m.events || []).find(e => e.type === 'CARD' && e.playerId === id);
+        const cardHtml = playerCard ? `
+          <span class="w-2.5 h-3.5 rounded-sm ${playerCard.detail === 'Red' ? 'bg-red-600' : 'bg-yellow-400'} inline-block shadow ml-1" title="${playerCard.detail === 'Red' ? 'Red Card (' + playerCard.minute + '\')' : 'Yellow Card (' + playerCard.minute + '\')'}"></span>
+        ` : '';
+
+        const subOffEvent = (m.events || []).find(e => e.type === 'SUB' && e.subOutId === id);
+        const subOffHtml = subOffEvent ? `
+          <span class="text-rose-400 font-medium inline-flex items-center text-xs ml-1 bg-rose-950/40 px-1.5 py-0.5 rounded border border-rose-500/30" title="Substituted off at ${subOffEvent.minute}'">
+            <i class="fa-solid fa-arrow-down text-[10px] mr-0.5"></i>${subOffEvent.minute}'
+          </span>
+        ` : '';
+
+        return `
+          <li class="flex items-center justify-between bg-slate-900/40 p-2 rounded border border-slate-800">
+            <span class="font-medium text-white flex items-center gap-2 flex-wrap">
+              <span class="text-xs text-argyle-gold w-5 font-mono">#${p.number || '-'}</span>
+              ${p.name}
+              ${isCap ? '<span class="w-5 h-5 rounded-full bg-argyle-green text-white text-[8px] flex items-center justify-center shadow border border-white" title="Captain">C</span>' : ''}
+              <span class="flex items-center">${goalsHtml}${cardHtml}${subOffHtml}</span>
+            </span>
+            <span class="text-[10px] bg-slate-700 text-slate-300 px-1.5 py-0.5 rounded font-semibold">${p.position}</span>
+          </li>
+        `;
+      }).join('');
+
+      // Used & Unused Subs
+      const usedSubsUl = document.getElementById('modal-used-subs');
+      const unusedSubsUl = document.getElementById('modal-unused-subs');
+
+      const usedSubIds = (m.events || []).filter(e => e.type === 'SUB').map(e => e.playerId);
+      const allSubIds = m.unusedSubs || [];
+
+      usedSubsUl.innerHTML = usedSubIds.map(id => {
+        const p = playerMap.get(id);
+        if (!p) return '';
+        const subEvent = m.events.find(e => e.type === 'SUB' && e.playerId === id);
+        const min = subEvent ? `${subEvent.minute}'` : '';
+
+        const playerGoals = (m.events || []).filter(e => e.type === 'GOAL' && e.playerId === id);
+        const goalsHtml = playerGoals.map(g => {
+          const isPen = g.detail === 'Penalty';
+          return `
+            <span class="relative inline-flex items-center justify-center ml-1" title="${isPen ? 'Penalty Goal (' + g.minute + '\')' : 'Goal (' + g.minute + '\')'}">
+              <i class="fa-solid fa-futbol text-emerald-400 text-xs"></i>
+              ${isPen ? '<span class="absolute -bottom-1 -right-1 bg-argyle-gold text-slate-950 font-black text-[7px] w-2.5 h-2.5 rounded-full flex items-center justify-center border border-slate-900">P</span>' : ''}
+            </span>
+          `;
+        }).join('');
+
+        const playerCard = (m.events || []).find(e => e.type === 'CARD' && e.playerId === id);
+        const cardHtml = playerCard ? `
+          <span class="w-2.5 h-3.5 rounded-sm ${playerCard.detail === 'Red' ? 'bg-red-600' : 'bg-yellow-400'} inline-block shadow ml-1" title="${playerCard.detail === 'Red' ? 'Red Card (' + playerCard.minute + '\')' : 'Yellow Card (' + playerCard.minute + '\')'}"></span>
+        ` : '';
+
+        return `
+          <li class="flex items-center justify-between bg-emerald-950/20 p-2 rounded border border-emerald-800/30">
+            <span class="text-emerald-300 flex items-center gap-2 flex-wrap">
+              <span class="text-xs text-slate-400 w-5 font-mono">#${p.number || '-'}</span> 
+              <span>${p.name}</span>
+              <span class="flex items-center">${goalsHtml}${cardHtml}</span>
+            </span>
+            <span class="text-xs font-semibold text-emerald-400 bg-emerald-900/40 px-2 py-0.5 rounded border border-emerald-700/40 flex items-center gap-1">
+              <i class="fa-solid fa-arrow-up text-[10px]"></i>${min}
+            </span>
+          </li>
+        `;
+      }).join('') || '<li class="text-xs text-slate-500 italic">No substitutes used</li>';
+
+      const actualUnusedIds = allSubIds.filter(id => !usedSubIds.includes(id));
+      unusedSubsUl.innerHTML = actualUnusedIds.map(id => {
+        const p = playerMap.get(id);
+        return p ? `<li class="py-1 px-2 border-b border-slate-800">#${p.number || '-'} ${p.name}</li>` : '';
+      }).join('') || '<li class="text-xs text-slate-500 italic">None</li>';
+
+      document.getElementById('match-modal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('match-modal').classList.add('hidden');
+    }
+
+    function filterSquad(pos) {
+      currentPosFilter = pos;
+      document.querySelectorAll('.pos-filter-btn').forEach(btn => {
+        const active = btn.textContent.trim() === (pos === 'AT' ? 'FW' : pos);
+        btn.className = `pos-filter-btn px-3 py-1 rounded text-xs font-semibold ${active ? 'bg-argyle-green text-white' : 'bg-slate-700 text-slate-300'}`;
+      });
+      renderSquad();
+    }
+
+    function sortSquad(field) {
+      if (currentSort.field === field) {
+        currentSort.asc = !currentSort.asc;
+      } else {
+        currentSort.field = field;
+        currentSort.asc = (field === 'name' || field === 'number' || field === 'position');
+      }
+      renderSquad();
+    }
+
+    function renderSquad() {
+      const body = document.getElementById('squad-table-body');
+      let squad = appData.squad || [];
+
+      if (currentPosFilter !== 'ALL') {
+        squad = squad.filter(p => p.position === currentPosFilter);
+      }
+
+      // Calculate stats
+      const stats = squad.map(p => {
+        let starts = 0;
+        let subApps = 0;
+        let goalsCount = 0;
+        let yc = 0;
+        let rc = 0;
+        let cleanSheets = 0;
+
+        (appData.matches || []).forEach(m => {
+          const inStarting = (m.startingXi || []).includes(p.id);
+          const subEv = (m.events || []).find(e => e.type === 'SUB' && e.playerId === p.id);
+          const wasUsedSub = !!subEv;
+
+          if (inStarting) starts++;
+          if (wasUsedSub) subApps++;
+
+          const playedInMatch = inStarting || wasUsedSub;
+          if (playedInMatch && m.scoreOpponent === 0) {
+            cleanSheets++;
+          }
+
+          (m.events || []).forEach(e => {
+            if (e.playerId === p.id) {
+              if (e.type === 'GOAL') goalsCount++;
+              if (e.type === 'CARD') {
+                if (e.detail === 'Red') rc++;
+                else yc++;
+              }
+            }
+          });
+        });
+
+        return { ...p, starts, subApps, totalApps: starts + subApps, goalsCount, cleanSheets, yc, rc };
+      });
+
+      // Sort stats
+      stats.sort((a, b) => {
+        let valA = a[currentSort.field];
+        let valB = b[currentSort.field];
+        if (typeof valA === 'string') {
+          return currentSort.asc ? valA.localeCompare(valB) : valB.localeCompare(valA);
+        }
+        return currentSort.asc ? valA - valB : valB - valA;
+      });
+
+      body.innerHTML = stats.map(p => {
+        return `
+          <tr class="hover:bg-slate-800/80 transition">
+            <td class="py-3 px-4 font-mono text-argyle-gold text-xs font-semibold">#${p.number || '-'}</td>
+            <td class="py-3 px-4 font-medium text-white">${p.name}</td>
+            <td class="py-3 px-4 text-center">
+              <span class="text-[10px] bg-slate-700 text-slate-300 px-2 py-0.5 rounded font-semibold">${p.position}</span>
+            </td>
+            <td class="py-3 px-4 text-center font-semibold text-slate-200">
+              ${p.totalApps} <span class="text-xs text-slate-400 font-normal">(${p.starts}/${p.subApps})</span>
+            </td>
+            <td class="py-3 px-4 text-center font-bold text-argyle-gold">${p.goalsCount}</td>
+            <td class="py-3 px-4 text-center font-bold text-emerald-400">${p.cleanSheets}</td>
+            <td class="py-3 px-4 text-center font-semibold text-yellow-400">${p.yc || '-'}</td>
+            <td class="py-3 px-4 text-center font-semibold text-red-500">${p.rc || '-'}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>

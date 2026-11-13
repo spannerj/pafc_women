@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-950 text-slate-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plymouth Argyle Women - Local Data Admin Editor</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        argyle: {
+                            dark: '#002C1E',
+                            DEFAULT: '#004731',
+                            light: '#006B49',
+                            gold: '#D4AF37',
+                            goldhover: '#B59325',
+                            accent: '#10B981'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #004731; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #006B49; }
+        .argyle-gradient { background: linear-gradient(135deg, #004731 0%, #002C1E 100%); }
+    </style>
+</head>
+<body class="h-full flex flex-col font-sans bg-slate-950 text-slate-100 antialiased selection:bg-argyle-gold selection:text-slate-950">
+
+    <!-- HEADER -->
+    <header class="argyle-gradient border-b border-argyle-gold/30 sticky top-0 z-30 shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-full bg-slate-900 border-2 border-argyle-gold flex items-center justify-center shadow-md">
+                        <i class="fa-solid fa-sliders text-xl text-argyle-gold"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight text-white uppercase">
+                            Argyle WFC <span class="text-argyle-gold">Data Admin</span>
+                        </h1>
+                        <p class="text-xs text-slate-300 font-medium">Local Match & Squad Manager for GitHub Pages</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <button onclick="exportJSON()" class="px-4 py-2 bg-argyle-gold hover:bg-argyle-goldhover text-slate-950 rounded-xl font-bold text-xs flex items-center gap-2 transition shadow-lg">
+                        <i class="fa-solid fa-download"></i> Export data.json
+                    </button>
+                    <label class="px-3.5 py-2 bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 hover:border-argyle-gold rounded-xl font-semibold text-xs cursor-pointer flex items-center gap-2 transition">
+                        <i class="fa-solid fa-upload text-argyle-gold"></i> Import
+                        <input type="file" id="import-file-input" onchange="importJSON(event)" accept=".json" class="hidden">
+                    </label>
+                </div>
+            </div>
+
+            <!-- NAVIGATION TABS -->
+            <nav class="flex space-x-2 border-t border-slate-800/80 pt-2">
+                <button id="tab-btn-matches" onclick="switchAdminTab('matches')" class="tab-btn px-4 py-2.5 text-sm font-semibold border-b-2 border-argyle-gold text-argyle-gold flex items-center gap-2">
+                    <i class="fa-regular fa-calendar-plus"></i> Matches (<span id="count-matches">0</span>)
+                </button>
+                <button id="tab-btn-squad" onclick="switchAdminTab('squad')" class="tab-btn px-4 py-2.5 text-sm font-semibold border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2">
+                    <i class="fa-solid fa-users"></i> Squad Roster (<span id="count-squad">0</span>)
+                </button>
+                <button id="tab-btn-deploy" onclick="switchAdminTab('deploy')" class="tab-btn px-4 py-2.5 text-sm font-semibold border-b-2 border-transparent text-slate-400 hover:text-slate-200 flex items-center gap-2">
+                    <i class="fa-brands fa-github text-slate-300"></i> Git & Deploy Guide
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- ================= TAB 1: MATCHES MANAGEMENT ================= -->
+        <section id="tab-matches" class="space-y-6">
+            <div class="flex items-center justify-between bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-6 shadow-lg">
+                <div>
+                    <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-soccer-ball text-argyle-gold"></i> Match Records
+                    </h2>
+                    <p class="text-xs text-slate-400">Manage fixtures, captain designations, lineups, subs, goals, and cards.</p>
+                </div>
+                <button onclick="openMatchModal()" class="px-4 py-2 bg-argyle hover:bg-argyle-light text-white font-bold rounded-xl text-xs flex items-center gap-2 transition shadow">
+                    <i class="fa-solid fa-plus"></i> Add New Match
+                </button>
+            </div>
+
+            <!-- Matches List -->
+            <div id="matches-list-container" class="space-y-3">
+                <!-- Dynamic Content -->
+            </div>
+        </section>
+
+        <!-- ================= TAB 2: SQUAD ROSTER ================= -->
+        <section id="tab-squad" class="space-y-6 hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Add / Edit Player Form -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg h-fit">
+                    <h3 id="player-form-title" class="text-md font-bold text-argyle-gold mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-user-plus"></i> Add New Player
+                    </h3>
+                    <form id="player-form" onsubmit="handleSavePlayer(event)" class="space-y-4">
+                        <input type="hidden" id="player-id">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1">Full Name</label>
+                            <input type="text" id="player-name" required placeholder="e.g. Olivia Giles" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-argyle-gold">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 mb-1">Squad Number</label>
+                                <input type="number" id="player-number" min="1" max="99" required placeholder="1" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-argyle-gold">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 mb-1">Position</label>
+                                <select id="player-pos" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-argyle-gold">
+                                    <option value="GK">Goalkeeper (GK)</option>
+                                    <option value="DF">Defender (DF)</option>
+                                    <option value="MF">Midfielder (MF)</option>
+                                    <option value="AT">Forward / Attacker (AT)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 pt-1">
+                            <input type="checkbox" id="player-active" checked class="w-4 h-4 rounded bg-slate-950 border-slate-800 text-argyle focus:ring-0">
+                            <label for="player-active" class="text-xs text-slate-300 font-medium">Active Squad Member</label>
+                        </div>
+                        <div class="flex items-center gap-2 pt-2">
+                            <button type="submit" class="flex-1 py-2 bg-argyle hover:bg-argyle-light text-white font-bold rounded-xl text-xs transition">Save Player</button>
+                            <button type="button" onclick="resetPlayerForm()" class="px-3 py-2 bg-slate-800 text-slate-400 hover:text-white rounded-xl text-xs">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Squad List -->
+                <div class="lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-md font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-list-ol text-argyle-gold"></i> Current Roster
+                        </h3>
+                        <input type="text" id="squad-search" oninput="renderSquadRoster()" placeholder="Search squad..." class="bg-slate-950 border border-slate-800 text-xs px-3 py-1.5 rounded-xl w-48 text-white focus:outline-none focus:border-argyle-gold">
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-slate-950 text-slate-400 uppercase font-bold border-b border-slate-800">
+                                <tr>
+                                    <th class="p-3">#</th>
+                                    <th class="p-3">Name</th>
+                                    <th class="p-3">Position</th>
+                                    <th class="p-3">Status</th>
+                                    <th class="p-3 text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="squad-table-body" class="divide-y divide-slate-800/60 font-medium">
+                                <!-- Dynamic Squad -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 3: DEPLOYMENT GUIDE ================= -->
+        <section id="tab-deploy" class="space-y-6 hidden">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-lg space-y-6">
+                <div class="border-b border-slate-800 pb-4">
+                    <h2 class="text-xl font-bold text-white flex items-center gap-2">
+                        <i class="fa-brands fa-github text-argyle-gold"></i> GitHub Pages Deployment Workflow
+                    </h2>
+                    <p class="text-xs text-slate-400 mt-1">Keep your live site updated in 3 simple steps.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                        <div class="w-8 h-8 rounded-full bg-argyle text-argyle-gold font-bold flex items-center justify-center text-sm">1</div>
+                        <h4 class="text-sm font-bold text-white">Edit & Export</h4>
+                        <p class="text-xs text-slate-400">Add match data, assign starting XIs, set captains, record sub pairings, and export <code>data.json</code>.</p>
+                    </div>
+
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                        <div class="w-8 h-8 rounded-full bg-argyle text-argyle-gold font-bold flex items-center justify-center text-sm">2</div>
+                        <h4 class="text-sm font-bold text-white">Commit to GitHub</h4>
+                        <p class="text-xs text-slate-400">Place the exported <code>data.json</code> in your repository root alongside <code>index.html</code> and push changes.</p>
+                    </div>
+
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                        <div class="w-8 h-8 rounded-full bg-argyle text-argyle-gold font-bold flex items-center justify-center text-sm">3</div>
+                        <h4 class="text-sm font-bold text-white">Live Site Updates</h4>
+                        <p class="text-xs text-slate-400">The static site automatically loads from <code>data.json</code> for read-only public viewing.</p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl flex items-center justify-between">
+                    <div>
+                        <h4 class="text-xs font-bold text-slate-300">Need starter data?</h4>
+                        <p class="text-xs text-slate-500">Reset local state to default Plymouth Argyle Women dataset.</p>
+                    </div>
+                    <button onclick="loadSampleData()" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-argyle-gold font-bold rounded-xl text-xs border border-slate-700 transition">
+                        Reset Default Data
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ================= MATCH EDITOR MODAL ================= -->
+    <div id="match-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-4xl w-full shadow-2xl overflow-hidden my-6">
+            <div class="argyle-gradient p-4 px-6 border-b border-argyle-gold/30 flex items-center justify-between">
+                <h3 id="modal-match-title" class="text-lg font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-pen-to-square text-argyle-gold"></i> Match Details & Event Builder
+                </h3>
+                <button onclick="closeMatchModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <form id="match-editor-form" onsubmit="saveMatchRecord(event)" class="p-6 space-y-6 max-h-[75vh] overflow-y-auto text-xs">
+                <input type="hidden" id="edit-match-id">
+
+                <!-- Basic Match Information -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block font-semibold text-slate-400 mb-1">Opponent</label>
+                        <input type="text" id="m-opponent" required placeholder="e.g. Exeter City Women" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-argyle-gold">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-400 mb-1">Match Date</label>
+                        <input type="date" id="m-date" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-argyle-gold">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-400 mb-1">Competition</label>
+                        <select id="m-competition" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-argyle-gold">
+                            <option value="FAWNL Premier">FAWNL Southern Premier</option>
+                            <option value="FA Cup">FA Women's Cup</option>
+                            <option value="FAWNL Cup">FAWNL Cup</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-4 gap-4">
+                    <div>
+                        <label class="block font-semibold text-slate-400 mb-1">Venue</label>
+                        <select id="m-venue" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-argyle-gold">
+                            <option value="Home">Home</option>
+                            <option value="Away">Away</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-400 mb-1">Argyle Score</label>
+                        <input type="number" id="m-score-argyle" min="0" value="0" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-argyle-gold">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-400 mb-1">Opponent Score</label>
+                        <input type="number" id="m-score-opp" min="0" value="0" required class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-argyle-gold">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-400 mb-1">Stadium</label>
+                        <input type="text" id="m-stadium" placeholder="e.g. Home Park" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-argyle-gold">
+                    </div>
+                </div>
+
+                <!-- Squad Selection & Captain Dropdown -->
+                <div class="border-t border-slate-800 pt-4 space-y-3">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <h4 class="text-sm font-bold text-argyle-gold">Lineup & Captain Selection</h4>
+                        <div class="flex items-center gap-3">
+                            <span id="lineup-count-badge" class="text-xs text-slate-400 font-normal">Starting: 0 / 11</span>
+                            <div class="flex items-center gap-1.5 bg-slate-950 px-2 py-1 rounded-lg border border-slate-800">
+                                <label class="text-[11px] font-bold text-argyle-gold">Captain (C):</label>
+                                <select id="m-captain" class="bg-slate-900 text-white border border-slate-700 rounded px-2 py-0.5 text-xs focus:outline-none focus:border-argyle-gold">
+                                    <option value="">-- Select Captain --</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="modal-squad-selection" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 max-h-48 overflow-y-auto p-3 bg-slate-950 rounded-xl border border-slate-800">
+                        <!-- Populated via JS -->
+                    </div>
+                </div>
+
+                <!-- Events Builder -->
+                <div class="border-t border-slate-800 pt-4 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h4 class="text-sm font-bold text-argyle-gold">Match Events (Goals, Substitutions, Cards)</h4>
+                        <div class="flex gap-2">
+                            <button type="button" onclick="addEventRow('GOAL')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-emerald-400 rounded-lg text-xs font-semibold">+ Goal</button>
+                            <button type="button" onclick="addEventRow('SUB')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-cyan-400 rounded-lg text-xs font-semibold">+ Sub</button>
+                            <button type="button" onclick="addEventRow('CARD')" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-amber-400 rounded-lg text-xs font-semibold">+ Card</button>
+                        </div>
+                    </div>
+
+                    <div id="events-builder-list" class="space-y-2.5 bg-slate-950 p-3 rounded-xl border border-slate-800">
+                        <!-- Dynamic Event Rows -->
+                    </div>
+                </div>
+
+                <div class="flex justify-end gap-3 border-t border-slate-800 pt-4">
+                    <button type="button" onclick="closeMatchModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl transition">Cancel</button>
+                    <button type="submit" class="px-5 py-2 bg-argyle hover:bg-argyle-light text-white font-bold rounded-xl transition flex items-center gap-2">
+                        <i class="fa-solid fa-floppy-disk"></i> Save Match Record
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-argyle-gold text-slate-950 px-4 py-3 rounded-xl font-bold text-xs shadow-2xl transition-all duration-300 transform translate-y-20 opacity-0 z-50 flex items-center gap-2">
+        <i class="fa-solid fa-circle-check"></i> <span id="toast-msg">Notification</span>
+    </div>
+
+    <!-- APPLICATION SCRIPT LOGIC -->
+    <script>
+        const DEFAULT_SQUAD = [
+            { id: "p1", name: "Olivia Giles", position: "GK", number: 1, active: true },
+            { id: "p2", name: "Ellie M Bishop", number: 5, position: "DF", active: true },
+            { id: "p3", name: "Shana Dolbel", number: 14, position: "AT", active: true },
+            { id: "p4", name: "Kiesha Walker", number: 15, position: "DF", active: true },
+            { id: "p5", name: "Aliyat Lambe", number: 4, position: "DF", active: true },
+            { id: "p6", name: "Farrah Ambrose", number: 18, position: "MF", active: true },
+            { id: "p7", name: "Kennedy Garside", number: 17, position: "MF", active: true },
+            { id: "p8", name: "Chloe Ingrouille", number: 21, position: "AT", active: true },
+            { id: "p9", name: "Khloe Reed", number: 25, position: "DF", active: true },
+            { id: "p10", name: "Millie Pullen", position: "DF", number: 3, active: true },
+            { id: "p11", name: "Cadi Rodgers", position: "AT", number: 7, active: true },
+            { id: "p12", name: "Katie Dickson", position: "MF", number: 14, active: true },
+            { id: "p13", name: "Saskia Worrall", number: 22, position: "GK", active: true },
+            { id: "p14", name: "Phoebe Bettey", number: 23, position: "DF", active: true }
+        ];
+
+        let squad = [];
+        let matches = [];
+        let currentEvents = [];
+
+        window.onload = function() {
+            loadLocalState();
+            renderMatchesList();
+            renderSquadRoster();
+            updateCounts();
+        };
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-msg').innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 2500);
+        }
+
+        function loadLocalState() {
+            const data = localStorage.getItem('argyle_admin_db');
+            if (data) {
+                try {
+                    const parsed = JSON.parse(data);
+                    squad = parsed.squad || [];
+                    matches = parsed.matches || [];
+                } catch(e) { console.error(e); }
+            } else {
+                squad = [...DEFAULT_SQUAD];
+            }
+        }
+
+        function saveLocalState() {
+            localStorage.setItem('argyle_admin_db', JSON.stringify({ squad, matches }));
+            updateCounts();
+        }
+
+        function updateCounts() {
+            document.getElementById('count-matches').innerText = matches.length;
+            document.getElementById('count-squad').innerText = squad.length;
+        }
+
+        function switchAdminTab(tab) {
+            ['matches', 'squad', 'deploy'].forEach(t => {
+                document.getElementById(`tab-${t}`).classList.add('hidden');
+                const btn = document.getElementById(`tab-btn-${t}`);
+                btn.classList.remove('border-argyle-gold', 'text-argyle-gold');
+                btn.classList.add('border-transparent', 'text-slate-400');
+            });
+
+            document.getElementById(`tab-${tab}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-btn-${tab}`);
+            activeBtn.classList.remove('border-transparent', 'text-slate-400');
+            activeBtn.classList.add('border-argyle-gold', 'text-argyle-gold');
+        }
+
+        /* SQUAD MANAGEMENT */
+        function renderSquadRoster() {
+            const search = document.getElementById('squad-search').value.toLowerCase();
+            const tbody = document.getElementById('squad-table-body');
+            tbody.innerHTML = '';
+
+            const filtered = squad.filter(p => p.name.toLowerCase().includes(search) || p.position.toLowerCase().includes(search));
+
+            filtered.forEach(p => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-800/40 border-b border-slate-800/50";
+                tr.innerHTML = `
+                    <td class="p-3 font-bold text-argyle-gold">#${p.number}</td>
+                    <td class="p-3 font-semibold text-white">${p.name}</td>
+                    <td class="p-3"><span class="px-2 py-0.5 bg-slate-950 border border-slate-800 rounded font-mono">${p.position}</span></td>
+                    <td class="p-3">${p.active ? '<span class="text-emerald-400">Active</span>' : '<span class="text-slate-500">Inactive</span>'}</td>
+                    <td class="p-3 text-right space-x-2">
+                        <button onclick="editPlayer('${p.id}')" class="text-slate-400 hover:text-argyle-gold"><i class="fa-solid fa-pen"></i></button>
+                        <button onclick="deletePlayer('${p.id}')" class="text-slate-400 hover:text-rose-400"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function handleSavePlayer(e) {
+            e.preventDefault();
+            const id = document.getElementById('player-id').value;
+            const name = document.getElementById('player-name').value;
+            const number = parseInt(document.getElementById('player-number').value);
+            const position = document.getElementById('player-pos').value;
+            const active = document.getElementById('player-active').checked;
+
+            if (id) {
+                const index = squad.findIndex(p => p.id === id);
+                if (index !== -1) squad[index] = { id, name, number, position, active };
+                showToast('Player updated!');
+            } else {
+                squad.push({ id: 'p_' + Date.now(), name, number, position, active });
+                showToast('New player added!');
+            }
+
+            saveLocalState();
+            renderSquadRoster();
+            resetPlayerForm();
+        }
+
+        function editPlayer(id) {
+            const p = squad.find(player => player.id === id);
+            if (!p) return;
+            document.getElementById('player-id').value = p.id;
+            document.getElementById('player-name').value = p.name;
+            document.getElementById('player-number').value = p.number;
+            document.getElementById('player-pos').value = p.position;
+            document.getElementById('player-active').checked = p.active;
+            document.getElementById('player-form-title').innerText = 'Edit Player';
+        }
+
+        function deletePlayer(id) {
+            if (confirm('Delete player from squad roster?')) {
+                squad = squad.filter(p => p.id !== id);
+                saveLocalState();
+                renderSquadRoster();
+                showToast('Player removed!');
+            }
+        }
+
+        function resetPlayerForm() {
+            document.getElementById('player-form').reset();
+            document.getElementById('player-id').value = '';
+            document.getElementById('player-form-title').innerText = 'Add New Player';
+        }
+
+        /* MATCH MANAGEMENT */
+        function renderMatchesList() {
+            const container = document.getElementById('matches-list-container');
+            container.innerHTML = '';
+
+            if (matches.length === 0) {
+                container.innerHTML = `<div class="p-8 text-center text-slate-500 bg-slate-900 border border-slate-800 rounded-2xl">No match records created yet. Click "Add New Match".</div>`;
+                return;
+            }
+
+            matches.forEach(m => {
+                const captainPlayer = squad.find(p => p.id === m.captainId);
+                const card = document.createElement('div');
+                card.className = "bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4";
+                card.innerHTML = `
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2">
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-950 border border-slate-800 uppercase text-slate-300">${m.competition}</span>
+                            <span class="text-xs text-slate-400 font-medium">${m.venue.toUpperCase()} • ${m.date}</span>
+                        </div>
+                        <h3 class="text-base font-bold text-white">vs ${m.opponent}</h3>
+                        ${captainPlayer ? `<p class="text-[11px] text-argyle-gold"><i class="fa-solid fa-copyright"></i> Captain: ${captainPlayer.name}</p>` : ''}
+                    </div>
+
+                    <div class="flex items-center gap-4">
+                        <div class="text-xl font-black text-argyle-gold bg-slate-950 px-3 py-1 rounded-lg border border-slate-800">
+                            ${m.scoreArgyle} - ${m.scoreOpponent}
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="openMatchModal('${m.id}')" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs font-semibold">Edit</button>
+                            <button onclick="deleteMatch('${m.id}')" class="px-2.5 py-1.5 bg-red-950/40 text-red-400 hover:bg-red-900/60 rounded-lg text-xs"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function openMatchModal(matchId = null) {
+            currentEvents = [];
+            const form = document.getElementById('match-editor-form');
+            form.reset();
+
+            let captainId = '';
+
+            if (matchId) {
+                const m = matches.find(match => match.id === matchId);
+                if (m) {
+                    document.getElementById('edit-match-id').value = m.id;
+                    document.getElementById('m-opponent').value = m.opponent;
+                    document.getElementById('m-date').value = m.date;
+                    document.getElementById('m-competition').value = m.competition;
+                    document.getElementById('m-venue').value = m.venue;
+                    document.getElementById('m-score-argyle').value = m.scoreArgyle;
+                    document.getElementById('m-score-opp').value = m.scoreOpponent;
+                    document.getElementById('m-stadium').value = m.stadium || '';
+                    captainId = m.captainId || '';
+                    currentEvents = m.events ? [...m.events] : [];
+                    renderSquadSelector(m.startingXi || [], m.unusedSubs || [], captainId);
+                }
+            } else {
+                document.getElementById('edit-match-id').value = '';
+                renderSquadSelector([], [], '');
+            }
+
+            renderEventsBuilder();
+            document.getElementById('match-modal').classList.remove('hidden');
+        }
+
+        function closeMatchModal() {
+            document.getElementById('match-modal').classList.add('hidden');
+        }
+
+        function renderSquadSelector(startingXiIds = [], benchIds = [], selectedCaptainId = '') {
+            const container = document.getElementById('modal-squad-selection');
+            container.innerHTML = '';
+
+            squad.forEach(p => {
+                let status = 'NONE';
+                if (startingXiIds.includes(p.id)) status = 'START';
+                else if (benchIds.includes(p.id)) status = 'SUB';
+
+                const div = document.createElement('div');
+                div.className = "flex items-center justify-between p-2 rounded bg-slate-900 border border-slate-800";
+                div.innerHTML = `
+                    <span class="font-medium text-white">#${p.number} ${p.name}</span>
+                    <select onchange="updateLineupCounter()" data-player-id="${p.id}" class="lineup-role-select bg-slate-950 border border-slate-700 text-slate-300 rounded px-1.5 py-0.5 text-xs">
+                        <option value="NONE" ${status === 'NONE' ? 'selected':''}>Out</option>
+                        <option value="START" ${status === 'START' ? 'selected':''}>Starting XI</option>
+                        <option value="SUB" ${status === 'SUB' ? 'selected':''}>Bench</option>
+                    </select>
+                `;
+                container.appendChild(div);
+            });
+            updateLineupCounter(selectedCaptainId);
+        }
+
+        function updateLineupCounter(selectedCaptainId = '') {
+            const selects = document.querySelectorAll('.lineup-role-select');
+            let count = 0;
+            const startingPlayerIds = [];
+
+            selects.forEach(s => {
+                const pId = s.getAttribute('data-player-id');
+                if (s.value === 'START') {
+                    count++;
+                    startingPlayerIds.push(pId);
+                }
+            });
+
+            const badge = document.getElementById('lineup-count-badge');
+            badge.innerText = `Starting: ${count} / 11`;
+            badge.className = count === 11 ? "text-xs text-emerald-400 font-bold" : "text-xs text-amber-400 font-semibold";
+
+            // Update Captain Dropdown
+            const capSelect = document.getElementById('m-captain');
+            const currentSelected = selectedCaptainId || capSelect.value;
+            capSelect.innerHTML = '<option value="">-- Select Captain --</option>';
+
+            startingPlayerIds.forEach(pId => {
+                const p = squad.find(item => item.id === pId);
+                if (p) {
+                    const opt = document.createElement('option');
+                    opt.value = p.id;
+                    opt.textContent = `${p.name} (#${p.number})`;
+                    if (p.id === currentSelected) opt.selected = true;
+                    capSelect.appendChild(opt);
+                }
+            });
+
+            // Refresh events dropdowns to sync with lineup changes
+            renderEventsBuilder();
+        }
+
+        /* EVENTS BUILDER */
+        function addEventRow(type) {
+            currentEvents.push({ 
+                id: 'e_' + Date.now(), 
+                type, 
+                minute: 1, 
+                playerId: squad[0]?.id || '', 
+                subOutId: squad[1]?.id || '', 
+                detail: type === 'GOAL' ? 'Normal' : (type === 'CARD' ? 'Yellow' : '') 
+            });
+            renderEventsBuilder();
+        }
+
+        function removeEventRow(id) {
+            currentEvents = currentEvents.filter(e => e.id !== id);
+            renderEventsBuilder();
+        }
+
+        function renderEventsBuilder() {
+            const list = document.getElementById('events-builder-list');
+            list.innerHTML = '';
+
+            if (currentEvents.length === 0) {
+                list.innerHTML = '<span class="text-slate-500 italic block py-2 text-center text-xs">No goals, subs or bookings added yet.</span>';
+                return;
+            }
+
+            const allPlayerOpts = squad.map(p => `<option value="${p.id}">#${p.number} ${p.name}</option>`).join('');
+
+            currentEvents.forEach((evt, idx) => {
+                const div = document.createElement('div');
+                div.className = "flex flex-wrap items-center gap-2 p-2.5 rounded bg-slate-900 border border-slate-800 text-xs";
+
+                if (evt.type === 'GOAL') {
+                    div.innerHTML = `
+                        <span class="font-bold uppercase text-[10px] px-2 py-0.5 rounded bg-slate-950 text-emerald-400">⚽ GOAL</span>
+                        
+                        <input type="number" min="1" max="120" value="${evt.minute}" onchange="currentEvents[${idx}].minute = parseInt(this.value)" placeholder="Min" class="w-14 bg-slate-950 border border-slate-700 rounded px-2 py-1 text-white">
+
+                        <select onchange="currentEvents[${idx}].playerId = this.value" class="bg-slate-950 border border-slate-700 text-slate-200 rounded px-2 py-1">
+                            ${squad.map(p => `<option value="${p.id}" ${evt.playerId === p.id ? 'selected':''}>${p.name}</option>`).join('')}
+                        </select>
+
+                        <select onchange="currentEvents[${idx}].detail = this.value" class="bg-slate-950 border border-slate-700 text-slate-200 rounded px-2 py-1">
+                            <option value="Normal" ${evt.detail === 'Normal' ? 'selected':''}>Normal Goal</option>
+                            <option value="Penalty" ${evt.detail === 'Penalty' ? 'selected':''}>Penalty (P)</option>
+                            <option value="Own Goal" ${evt.detail === 'Own Goal' ? 'selected':''}>Own Goal (OG)</option>
+                        </select>
+
+                        <button type="button" onclick="removeEventRow('${evt.id}')" class="text-red-400 hover:text-red-300 px-2 ml-auto"><i class="fa-solid fa-xmark"></i></button>
+                    `;
+                } else if (evt.type === 'SUB') {
+                    div.innerHTML = `
+                        <span class="font-bold uppercase text-[10px] px-2 py-0.5 rounded bg-slate-950 text-cyan-400">🔄 SUB</span>
+                        
+                        <input type="number" min="1" max="120" value="${evt.minute}" onchange="currentEvents[${idx}].minute = parseInt(this.value)" placeholder="Min" class="w-14 bg-slate-950 border border-slate-700 rounded px-2 py-1 text-white">
+
+                        <span class="text-rose-400 font-semibold">OFF:</span>
+                        <select onchange="currentEvents[${idx}].subOutId = this.value" class="bg-slate-950 border border-slate-700 text-slate-200 rounded px-2 py-1">
+                            ${squad.map(p => `<option value="${p.id}" ${evt.subOutId === p.id ? 'selected':''}>${p.name}</option>`).join('')}
+                        </select>
+
+                        <span class="text-emerald-400 font-semibold">ON:</span>
+                        <select onchange="currentEvents[${idx}].playerId = this.value" class="bg-slate-950 border border-slate-700 text-slate-200 rounded px-2 py-1">
+                            ${squad.map(p => `<option value="${p.id}" ${evt.playerId === p.id ? 'selected':''}>${p.name}</option>`).join('')}
+                        </select>
+
+                        <button type="button" onclick="removeEventRow('${evt.id}')" class="text-red-400 hover:text-red-300 px-2 ml-auto"><i class="fa-solid fa-xmark"></i></button>
+                    `;
+                } else if (evt.type === 'CARD') {
+                    div.innerHTML = `
+                        <span class="font-bold uppercase text-[10px] px-2 py-0.5 rounded bg-slate-950 text-amber-400">🟨 CARD</span>
+                        
+                        <input type="number" min="1" max="120" value="${evt.minute}" onchange="currentEvents[${idx}].minute = parseInt(this.value)" placeholder="Min" class="w-14 bg-slate-950 border border-slate-700 rounded px-2 py-1 text-white">
+
+                        <select onchange="currentEvents[${idx}].playerId = this.value" class="bg-slate-950 border border-slate-700 text-slate-200 rounded px-2 py-1">
+                            ${squad.map(p => `<option value="${p.id}" ${evt.playerId === p.id ? 'selected':''}>${p.name}</option>`).join('')}
+                        </select>
+
+                        <select onchange="currentEvents[${idx}].detail = this.value" class="bg-slate-950 border border-slate-700 text-slate-200 rounded px-2 py-1">
+                            <option value="Yellow" ${evt.detail === 'Yellow' ? 'selected':''}>Yellow Card 🟨</option>
+                            <option value="Red" ${evt.detail === 'Red' ? 'selected':''}>Red Card 🟥</option>
+                        </select>
+
+                        <button type="button" onclick="removeEventRow('${evt.id}')" class="text-red-400 hover:text-red-300 px-2 ml-auto"><i class="fa-solid fa-xmark"></i></button>
+                    `;
+                }
+
+                list.appendChild(div);
+            });
+        }
+
+        function saveMatchRecord(e) {
+            e.preventDefault();
+            const id = document.getElementById('edit-match-id').value || ('m_' + Date.now());
+            const opponent = document.getElementById('m-opponent').value;
+            const date = document.getElementById('m-date').value;
+            const competition = document.getElementById('m-competition').value;
+            const venue = document.getElementById('m-venue').value;
+            const scoreArgyle = parseInt(document.getElementById('m-score-argyle').value);
+            const scoreOpponent = parseInt(document.getElementById('m-score-opp').value);
+            const stadium = document.getElementById('m-stadium').value;
+            const captainId = document.getElementById('m-captain').value;
+
+            const startingXi = [];
+            const unusedSubs = [];
+
+            document.querySelectorAll('.lineup-role-select').forEach(s => {
+                const pId = s.getAttribute('data-player-id');
+                if (s.value === 'START') startingXi.push(pId);
+                if (s.value === 'SUB') unusedSubs.push(pId);
+            });
+
+            const matchRecord = {
+                id, opponent, date, competition, venue, scoreArgyle, scoreOpponent, stadium, captainId,
+                startingXi, unusedSubs, usedSubs: [], events: currentEvents
+            };
+
+            const existingIdx = matches.findIndex(m => m.id === id);
+            if (existingIdx !== -1) matches[existingIdx] = matchRecord;
+            else matches.unshift(matchRecord);
+
+            saveLocalState();
+            renderMatchesList();
+            closeMatchModal();
+            showToast('Match record saved successfully!');
+        }
+
+        function deleteMatch(id) {
+            if (confirm('Delete this match record?')) {
+                matches = matches.filter(m => m.id !== id);
+                saveLocalState();
+                renderMatchesList();
+                showToast('Match deleted!');
+            }
+        }
+
+        /* EXPORT / IMPORT */
+        function exportJSON() {
+            const payload = JSON.stringify({ squad, matches }, null, 2);
+            const blob = new Blob([payload], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'data.json';
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('Exported data.json successfully!');
+        }
+
+        function importJSON(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                try {
+                    const parsed = JSON.parse(evt.target.result);
+                    if (parsed.squad && parsed.matches) {
+                        squad = parsed.squad;
+                        matches = parsed.matches;
+                        saveLocalState();
+                        renderMatchesList();
+                        renderSquadRoster();
+                        showToast('data.json imported successfully!');
+                    }
+                } catch(err) { alert('Invalid data.json file format'); }
+            };
+            reader.readAsText(file);
+        }
+
+        function loadSampleData() {
+            if (confirm('Reset database to default Argyle Women records?')) {
+                squad = [...DEFAULT_SQUAD];
+                matches = [];
+                saveLocalState();
+                renderMatchesList();
+                renderSquadRoster();
+                showToast('Sample dataset loaded!');
+            }
+        }
+    </script>
+</body>
+</html>
