@@ -71,13 +71,6 @@
       "active": true
     },
     {
-      "id": "p12",
-      "name": "Katie Dickson",
-      "position": "MF",
-      "number": 14,
-      "active": true
-    },
-    {
       "id": "p_1794437338938",
       "name": "Saskia Worrall",
       "number": 22,
@@ -177,6 +170,86 @@
     }
   ],
   "matches": [
+    {
+      "id": "m_1794649754305",
+      "opponent": "Bridgwater Town",
+      "date": "2026-09-06",
+      "competition": "FAWNL Cup",
+      "venue": "Away",
+      "scoreArgyle": 0,
+      "scoreOpponent": 2,
+      "stadium": "Middlezoy Rovers FC",
+      "captainId": "p2",
+      "startingXi": [
+        "p1",
+        "p2",
+        "p3",
+        "p4",
+        "p5",
+        "p6",
+        "p7",
+        "p8",
+        "p9",
+        "p_1794437587864",
+        "p_1794437744367"
+      ],
+      "unusedSubs": [
+        "p_1794437529039",
+        "p_1794437683458",
+        "p_1794437808681"
+      ],
+      "usedSubs": [],
+      "events": [
+        {
+          "id": "e_1794649387985",
+          "type": "SUB",
+          "minute": 46,
+          "playerId": "p_1794437683458",
+          "subOutId": "p2",
+          "detail": ""
+        },
+        {
+          "id": "e_1794649407030",
+          "type": "SUB",
+          "minute": 62,
+          "playerId": "p_1794437808681",
+          "subOutId": "p7",
+          "detail": ""
+        },
+        {
+          "id": "e_1794649441556",
+          "type": "SUB",
+          "minute": 1,
+          "playerId": "p_1794437529039",
+          "subOutId": "p8",
+          "detail": ""
+        },
+        {
+          "id": "e_1794649665003",
+          "type": "CARD",
+          "minute": 51,
+          "playerId": "p_1794437683458",
+          "subOutId": "p2",
+          "detail": "Yellow"
+        },
+        {
+          "id": "e_1794649695072",
+          "type": "CARD",
+          "minute": 76,
+          "playerId": "p6",
+          "subOutId": "p2",
+          "detail": "Yellow"
+        },
+        {
+          "id": "e_1794649724049",
+          "type": "CARD",
+          "minute": 86,
+          "playerId": "p_1794437529039",
+          "subOutId": "p2",
+          "detail": "Yellow"
+        }
+      ]
+    },
     {
       "id": "m_1794522600244",
       "opponent": "Fulham",
