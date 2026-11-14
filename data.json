@@ -64,13 +64,6 @@
       "active": true
     },
     {
-      "id": "p10",
-      "name": "Millie Pullen",
-      "position": "DF",
-      "number": 3,
-      "active": true
-    },
-    {
       "id": "p_1794437338938",
       "name": "Saskia Worrall",
       "number": 22,
@@ -170,6 +163,55 @@
     }
   ],
   "matches": [
+    {
+      "id": "m_1794671804213",
+      "opponent": "Portsmouth",
+      "date": "2026-09-13",
+      "competition": "FAWNL Premier",
+      "venue": "Home",
+      "scoreArgyle": 0,
+      "scoreOpponent": 4,
+      "stadium": "Home Park",
+      "captainId": "p2",
+      "startingXi": [
+        "p1",
+        "p2",
+        "p3",
+        "p4",
+        "p5",
+        "p6",
+        "p7",
+        "p8",
+        "p9",
+        "p_1794437587864",
+        "p_1794437744367"
+      ],
+      "unusedSubs": [
+        "p_1794437338938",
+        "p_1794437529039",
+        "p_1794437808681",
+        "p_1794438767963"
+      ],
+      "usedSubs": [],
+      "events": [
+        {
+          "id": "e_1794671595879",
+          "type": "SUB",
+          "minute": 58,
+          "playerId": "p_1794437660678",
+          "subOutId": "p7",
+          "detail": ""
+        },
+        {
+          "id": "e_1794671653629",
+          "type": "SUB",
+          "minute": 46,
+          "playerId": "p_1794437683458",
+          "subOutId": "p4",
+          "detail": ""
+        }
+      ]
+    },
     {
       "id": "m_1794649754305",
       "opponent": "Bridgwater Town",
