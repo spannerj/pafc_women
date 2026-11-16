@@ -164,6 +164,80 @@
   ],
   "matches": [
     {
+      "id": "m_1794788399595",
+      "opponent": "Oxford United",
+      "date": "2026-09-20",
+      "competition": "FAWNL Premier",
+      "venue": "Away",
+      "scoreArgyle": 0,
+      "scoreOpponent": 5,
+      "stadium": "Court Place Farm",
+      "captainId": "p2",
+      "startingXi": [
+        "p1",
+        "p5",
+        "p2",
+        "p_1794437744367",
+        "p3",
+        "p4",
+        "p_1794437587864",
+        "p7",
+        "p6",
+        "p8",
+        "p9"
+      ],
+      "unusedSubs": [
+        "p_1794437660678",
+        "p_1794437683458",
+        "p_1794437338938",
+        "p_1794437529039",
+        "p_1794437702194"
+      ],
+      "usedSubs": [],
+      "events": [
+        {
+          "id": "e_1794788117598",
+          "type": "SUB",
+          "minute": 77,
+          "playerId": "p_1794437702194",
+          "subOutId": "p2",
+          "detail": ""
+        },
+        {
+          "id": "e_1794788156971",
+          "type": "SUB",
+          "minute": 82,
+          "playerId": "p_1794437529039",
+          "subOutId": "p3",
+          "detail": ""
+        },
+        {
+          "id": "e_1794788301525",
+          "type": "SUB",
+          "minute": 69,
+          "playerId": "p_1794437660678",
+          "subOutId": "p7",
+          "detail": ""
+        },
+        {
+          "id": "e_1794788328442",
+          "type": "SUB",
+          "minute": 61,
+          "playerId": "p_1794437683458",
+          "subOutId": "p4",
+          "detail": ""
+        },
+        {
+          "id": "e_1794788364223",
+          "type": "CARD",
+          "minute": 34,
+          "playerId": "p2",
+          "subOutId": "p2",
+          "detail": "Yellow"
+        }
+      ]
+    },
+    {
       "id": "m_1794671804213",
       "opponent": "Portsmouth",
       "date": "2026-09-13",
@@ -548,14 +622,6 @@
           "minute": 4,
           "playerId": "p3",
           "detail": ""
-        },
-        {
-          "id": "e_1794442634475",
-          "type": "GOAL",
-          "minute": 90,
-          "playerId": "p8",
-          "subOutId": "p2",
-          "detail": "Penalty"
         }
       ]
     }

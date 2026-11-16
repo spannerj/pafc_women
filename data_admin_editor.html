@@ -326,20 +326,7 @@
     <!-- APPLICATION SCRIPT LOGIC -->
     <script>
         const DEFAULT_SQUAD = [
-            { id: "p1", name: "Olivia Giles", position: "GK", number: 1, active: true },
-            { id: "p2", name: "Ellie M Bishop", number: 5, position: "DF", active: true },
-            { id: "p3", name: "Shana Dolbel", number: 14, position: "AT", active: true },
-            { id: "p4", name: "Kiesha Walker", number: 15, position: "DF", active: true },
-            { id: "p5", name: "Aliyat Lambe", number: 4, position: "DF", active: true },
-            { id: "p6", name: "Farrah Ambrose", number: 18, position: "MF", active: true },
-            { id: "p7", name: "Kennedy Garside", number: 17, position: "MF", active: true },
-            { id: "p8", name: "Chloe Ingrouille", number: 21, position: "AT", active: true },
-            { id: "p9", name: "Khloe Reed", number: 25, position: "DF", active: true },
-            { id: "p10", name: "Millie Pullen", position: "DF", number: 3, active: true },
-            { id: "p11", name: "Cadi Rodgers", position: "AT", number: 7, active: true },
-            { id: "p12", name: "Katie Dickson", position: "MF", number: 14, active: true },
-            { id: "p13", name: "Saskia Worrall", number: 22, position: "GK", active: true },
-            { id: "p14", name: "Phoebe Bettey", number: 23, position: "DF", active: true }
+
         ];
 
         let squad = [];
@@ -405,7 +392,10 @@
             const tbody = document.getElementById('squad-table-body');
             tbody.innerHTML = '';
 
-            const filtered = squad.filter(p => p.name.toLowerCase().includes(search) || p.position.toLowerCase().includes(search));
+            // Sort squad by shirt number numerically (handling missing/string numbers safely)
+            const sortedSquad = [...squad].sort((a, b) => (parseInt(a.number) || 999) - (parseInt(b.number) || 999));
+
+            const filtered = sortedSquad.filter(p => p.name.toLowerCase().includes(search) || p.position.toLowerCase().includes(search));
 
             filtered.forEach(p => {
                 const tr = document.createElement('tr');
@@ -549,7 +539,9 @@
             const container = document.getElementById('modal-squad-selection');
             container.innerHTML = '';
 
-            squad.forEach(p => {
+            const sortedSquad = [...squad].sort((a, b) => (parseInt(a.number) || 999) - (parseInt(b.number) || 999));
+
+            sortedSquad.forEach(p => {
                 let status = 'NONE';
                 if (startingXiIds.includes(p.id)) status = 'START';
                 else if (benchIds.includes(p.id)) status = 'SUB';
@@ -765,6 +757,10 @@
                     const parsed = JSON.parse(evt.target.result);
                     if (parsed.squad && parsed.matches) {
                         squad = parsed.squad;
+
+                        // Sort squad numerically by shirt number right here!
+                        squad.sort((a, b) => (parseInt(a.number) || 999) - (parseInt(b.number) || 999));
+
                         matches = parsed.matches;
                         saveLocalState();
                         renderMatchesList();
