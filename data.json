@@ -164,6 +164,142 @@
   ],
   "matches": [
     {
+      "id": "m_1794954826076",
+      "opponent": "Real Bedford",
+      "date": "2026-10-04",
+      "competition": "FAWNL Premier",
+      "venue": "Home",
+      "scoreArgyle": 1,
+      "scoreOpponent": 3,
+      "stadium": "Home Park",
+      "captainId": "p2",
+      "startingXi": [
+        "p1",
+        "p_1794437379621",
+        "p5",
+        "p2",
+        "p_1794437744367",
+        "p3",
+        "p4",
+        "p_1794437587864",
+        "p7",
+        "p6",
+        "p9"
+      ],
+      "unusedSubs": [],
+      "usedSubs": [],
+      "events": [
+        {
+          "id": "e_1794954647360",
+          "type": "SUB",
+          "minute": 86,
+          "playerId": "p8",
+          "subOutId": "p4",
+          "detail": ""
+        },
+        {
+          "id": "e_1794954676250",
+          "type": "SUB",
+          "minute": 66,
+          "playerId": "p_1794437683458",
+          "subOutId": "p_1794437587864",
+          "detail": ""
+        },
+        {
+          "id": "e_1794954724283",
+          "type": "SUB",
+          "minute": 79,
+          "playerId": "p_1794437702194",
+          "subOutId": "p7",
+          "detail": ""
+        },
+        {
+          "id": "e_1794954764874",
+          "type": "SUB",
+          "minute": 79,
+          "playerId": "p_1794437660678",
+          "subOutId": "p6",
+          "detail": ""
+        },
+        {
+          "id": "e_1794954791312",
+          "type": "SUB",
+          "minute": 86,
+          "playerId": "p_1794437529039",
+          "subOutId": "p9",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "m_1794954350410",
+      "opponent": "Torquay United",
+      "date": "2026-09-27",
+      "competition": "FAWNL Cup",
+      "venue": "Home",
+      "scoreArgyle": 1,
+      "scoreOpponent": 0,
+      "stadium": "Home Park",
+      "captainId": "p2",
+      "startingXi": [
+        "p1",
+        "p_1794437379621",
+        "p5",
+        "p2",
+        "p_1794437744367",
+        "p3",
+        "p_1794437587864",
+        "p6",
+        "p_1794437660678",
+        "p8",
+        "p9"
+      ],
+      "unusedSubs": [],
+      "usedSubs": [],
+      "events": [
+        {
+          "id": "e_1794954072834",
+          "type": "GOAL",
+          "minute": 5,
+          "playerId": "p_1794437660678",
+          "subOutId": "p2",
+          "detail": "Normal"
+        },
+        {
+          "id": "e_1794954084987",
+          "type": "SUB",
+          "minute": 94,
+          "playerId": "p_1794437808681",
+          "subOutId": "p_1794437744367",
+          "detail": ""
+        },
+        {
+          "id": "e_1794954099233",
+          "type": "SUB",
+          "minute": 63,
+          "playerId": "p7",
+          "subOutId": "p6",
+          "detail": ""
+        },
+        {
+          "id": "e_1794954186390",
+          "type": "SUB",
+          "minute": 58,
+          "playerId": "p4",
+          "subOutId": "p8",
+          "detail": ""
+        },
+        {
+          "id": "e_1794954213201",
+          "type": "SUB",
+          "minute": 89,
+          "playerId": "p_1794437529039",
+          "subOutId": "p9",
+          "detail": ""
+        }
+      ]
+    },
+    {
       "id": "m_1794788399595",
       "opponent": "Oxford United",
       "date": "2026-09-20",
