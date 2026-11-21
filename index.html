@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -23,6 +24,7 @@
     };
   </script>
 </head>
+
 <body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans">
 
   <!-- Header -->
@@ -30,8 +32,10 @@
     <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between items-center gap-4">
       <div class="flex items-center gap-3">
         <!-- Replaced PA circle with Argyle Crest image placeholder -->
-        <div class="w-12 h-12 rounded-full bg-argyle-green flex items-center justify-center border-2 border-argyle-gold overflow-hidden shadow-md bg-white/5">
-          <img src="logo.svg.webp" alt="Plymouth Argyle Crest" class="w-10 h-10 object-contain" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'text-argyle-gold font-bold text-lg\'>PA</span>';">
+        <div
+          class="w-12 h-12 rounded-full bg-argyle-green flex items-center justify-center border-2 border-argyle-gold overflow-hidden shadow-md bg-white/5">
+          <img src="logo.svg.webp" alt="Plymouth Argyle Crest" class="w-10 h-10 object-contain"
+            onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\'text-argyle-gold font-bold text-lg\'>PA</span>';">
         </div>
         <div>
           <h1 class="text-xl font-bold text-white tracking-wide">PLYMOUTH ARGYLE</h1>
@@ -39,10 +43,12 @@
         </div>
       </div>
       <div class="flex gap-2">
-        <button onclick="switchTab('matches')" id="tab-matches" class="px-4 py-2 rounded-lg font-medium text-sm transition bg-argyle-green text-white shadow-md border border-argyle-gold/40">
+        <button onclick="switchTab('matches')" id="tab-matches"
+          class="px-4 py-2 rounded-lg font-medium text-sm transition bg-argyle-green text-white shadow-md border border-argyle-gold/40">
           <i class="fa-solid fa-calendar-days mr-2"></i>Match Centre
         </button>
-        <button onclick="switchTab('squad')" id="tab-squad" class="px-4 py-2 rounded-lg font-medium text-sm transition bg-slate-800 text-slate-300 hover:text-white border border-slate-700">
+        <button onclick="switchTab('squad')" id="tab-squad"
+          class="px-4 py-2 rounded-lg font-medium text-sm transition bg-slate-800 text-slate-300 hover:text-white border border-slate-700">
           <i class="fa-solid fa-users mr-2"></i>Squad & Stats
         </button>
       </div>
@@ -51,19 +57,21 @@
 
   <!-- Main Container -->
   <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full">
-    
+
     <!-- Loading / Error Banner -->
     <div id="status-banner" class="hidden mb-6 p-4 rounded-xl border"></div>
 
     <!-- MATCHES TAB -->
     <section id="view-matches" class="space-y-6">
-      <div class="flex flex-wrap justify-between items-center gap-4 bg-slate-800/80 p-4 rounded-xl border border-slate-700">
+      <div
+        class="flex flex-wrap justify-between items-center gap-4 bg-slate-800/80 p-4 rounded-xl border border-slate-700">
         <h2 class="text-lg font-semibold text-white flex items-center gap-2">
           <i class="fa-solid fa-trophy text-argyle-gold"></i> Fixtures & Results
         </h2>
         <div class="flex items-center gap-2">
           <label class="text-xs text-slate-400 font-medium">Filter:</label>
-          <select id="competition-filter" onchange="renderMatches()" class="bg-slate-900 border border-slate-700 text-sm rounded-lg px-3 py-1.5 text-slate-200 focus:outline-none focus:border-argyle-gold">
+          <select id="competition-filter" onchange="renderMatches()"
+            class="bg-slate-900 border border-slate-700 text-sm rounded-lg px-3 py-1.5 text-slate-200 focus:outline-none focus:border-argyle-gold">
             <option value="ALL">All Competitions</option>
           </select>
         </div>
@@ -76,16 +84,22 @@
 
     <!-- SQUAD TAB -->
     <section id="view-squad" class="hidden space-y-6">
-      <div class="flex flex-wrap justify-between items-center gap-4 bg-slate-800/80 p-4 rounded-xl border border-slate-700">
+      <div
+        class="flex flex-wrap justify-between items-center gap-4 bg-slate-800/80 p-4 rounded-xl border border-slate-700">
         <h2 class="text-lg font-semibold text-white flex items-center gap-2">
           <i class="fa-solid fa-chart-line text-argyle-gold"></i> Player Statistics
         </h2>
         <div class="flex gap-2">
-          <button onclick="filterSquad('ALL')" class="pos-filter-btn px-3 py-1 rounded bg-argyle-green text-xs font-semibold text-white">All</button>
-          <button onclick="filterSquad('GK')" class="pos-filter-btn px-3 py-1 rounded bg-slate-700 text-xs font-semibold text-slate-300">GK</button>
-          <button onclick="filterSquad('DF')" class="pos-filter-btn px-3 py-1 rounded bg-slate-700 text-xs font-semibold text-slate-300">DF</button>
-          <button onclick="filterSquad('MF')" class="pos-filter-btn px-3 py-1 rounded bg-slate-700 text-xs font-semibold text-slate-300">MF</button>
-          <button onclick="filterSquad('AT')" class="pos-filter-btn px-3 py-1 rounded bg-slate-700 text-xs font-semibold text-slate-300">FW</button>
+          <button onclick="filterSquad('ALL')"
+            class="pos-filter-btn px-3 py-1 rounded bg-argyle-green text-xs font-semibold text-white">All</button>
+          <button onclick="filterSquad('GK')"
+            class="pos-filter-btn px-3 py-1 rounded bg-slate-700 text-xs font-semibold text-slate-300">GK</button>
+          <button onclick="filterSquad('DF')"
+            class="pos-filter-btn px-3 py-1 rounded bg-slate-700 text-xs font-semibold text-slate-300">DF</button>
+          <button onclick="filterSquad('MF')"
+            class="pos-filter-btn px-3 py-1 rounded bg-slate-700 text-xs font-semibold text-slate-300">MF</button>
+          <button onclick="filterSquad('AT')"
+            class="pos-filter-btn px-3 py-1 rounded bg-slate-700 text-xs font-semibold text-slate-300">FW</button>
         </div>
       </div>
 
@@ -96,16 +110,29 @@
 
       <div class="overflow-x-auto bg-slate-800/60 rounded-xl border border-slate-700 shadow-xl relative">
         <table class="w-full text-left text-sm text-slate-300 whitespace-nowrap">
-          <thead class="bg-slate-800 text-xs uppercase text-slate-400 font-semibold border-b border-slate-700 select-none">
+          <thead
+            class="bg-slate-800 text-xs uppercase text-slate-400 font-semibold border-b border-slate-700 select-none">
             <tr>
-              <th onclick="sortSquad('number')" class="py-3 px-4 cursor-pointer hover:text-argyle-gold"># <i class="fa-solid fa-sort ml-1 text-[10px]"></i></th>
-              <th onclick="sortSquad('name')" class="py-3 px-4 cursor-pointer hover:text-argyle-gold">Player <i class="fa-solid fa-sort ml-1 text-[10px]"></i></th>
-              <th onclick="sortSquad('position')" class="py-3 px-4 text-center cursor-pointer hover:text-argyle-gold">Pos <i class="fa-solid fa-sort ml-1 text-[10px]"></i></th>
-              <th onclick="sortSquad('totalApps')" class="py-3 px-4 text-center cursor-pointer hover:text-argyle-gold">Apps (Starts/Sub) <i class="fa-solid fa-sort ml-1 text-[10px]"></i></th>
-              <th onclick="sortSquad('goalsCount')" class="py-3 px-4 text-center cursor-pointer hover:text-argyle-gold text-argyle-gold">Goals <i class="fa-solid fa-sort ml-1 text-[10px]"></i></th>
-              <th onclick="sortSquad('cleanSheets')" class="py-3 px-4 text-center cursor-pointer hover:text-argyle-gold text-emerald-400">CS <i class="fa-solid fa-sort ml-1 text-[10px]"></i></th>
-              <th onclick="sortSquad('yc')" class="py-3 px-4 text-center cursor-pointer hover:text-argyle-gold text-yellow-400">YC <i class="fa-solid fa-sort ml-1 text-[10px]"></i></th>
-              <th onclick="sortSquad('rc')" class="py-3 px-4 text-center cursor-pointer hover:text-argyle-gold text-red-500">RC <i class="fa-solid fa-sort ml-1 text-[10px]"></i></th>
+              <th onclick="sortSquad('number')" class="py-3 px-4 cursor-pointer hover:text-argyle-gold"># <i
+                  class="fa-solid fa-sort ml-1 text-[10px]"></i></th>
+              <th onclick="sortSquad('name')" class="py-3 px-4 cursor-pointer hover:text-argyle-gold">Player <i
+                  class="fa-solid fa-sort ml-1 text-[10px]"></i></th>
+              <th onclick="sortSquad('position')" class="py-3 px-4 text-center cursor-pointer hover:text-argyle-gold">
+                Pos <i class="fa-solid fa-sort ml-1 text-[10px]"></i></th>
+              <th onclick="sortSquad('totalApps')" class="py-3 px-4 text-center cursor-pointer hover:text-argyle-gold">
+                Apps (Starts/Sub) <i class="fa-solid fa-sort ml-1 text-[10px]"></i></th>
+              <th onclick="sortSquad('goalsCount')"
+                class="py-3 px-4 text-center cursor-pointer hover:text-argyle-gold text-argyle-gold">Goals <i
+                  class="fa-solid fa-sort ml-1 text-[10px]"></i></th>
+              <th onclick="sortSquad('cleanSheets')"
+                class="py-3 px-4 text-center cursor-pointer hover:text-argyle-gold text-emerald-400">CS <i
+                  class="fa-solid fa-sort ml-1 text-[10px]"></i></th>
+              <th onclick="sortSquad('yc')"
+                class="py-3 px-4 text-center cursor-pointer hover:text-argyle-gold text-yellow-400">YC <i
+                  class="fa-solid fa-sort ml-1 text-[10px]"></i></th>
+              <th onclick="sortSquad('rc')"
+                class="py-3 px-4 text-center cursor-pointer hover:text-argyle-gold text-red-500">RC <i
+                  class="fa-solid fa-sort ml-1 text-[10px]"></i></th>
             </tr>
           </thead>
           <tbody id="squad-table-body" class="divide-y divide-slate-700/50">
@@ -118,8 +145,10 @@
   </main>
 
   <!-- MATCH DETAILS MODAL -->
-  <div id="match-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 hidden">
-    <div class="bg-slate-800 rounded-2xl max-w-3xl w-full max-h-[90vh] flex flex-col border border-slate-700 shadow-2xl overflow-hidden">
+  <div id="match-modal"
+    class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50 hidden">
+    <div
+      class="bg-slate-800 rounded-2xl max-w-3xl w-full max-h-[90vh] flex flex-col border border-slate-700 shadow-2xl overflow-hidden">
       <!-- Modal Header -->
       <div class="bg-argyle-dark p-6 border-b border-argyle-gold/30 relative">
         <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2">
@@ -225,15 +254,32 @@
       }
 
       grid.innerHTML = filtered.map(m => {
-        const resultColor = m.scoreArgyle > m.scoreOpponent ? 'text-emerald-400 border-emerald-500/30' :
-                            m.scoreArgyle < m.scoreOpponent ? 'text-rose-400 border-rose-500/30' : 'text-amber-400 border-amber-500/30';
-        const resultLabel = m.scoreArgyle > m.scoreOpponent ? 'W' : m.scoreArgyle < m.scoreOpponent ? 'L' : 'D';
+        const hasPens = m.penalties && typeof m.penalties.argyle === 'number' && typeof m.penalties.opponent === 'number';
+        const isPenWin = hasPens && m.penalties.argyle > m.penalties.opponent;
+        const isPenLoss = hasPens && m.penalties.argyle < m.penalties.opponent;
+
+        const isWin = m.scoreArgyle > m.scoreOpponent || isPenWin;
+        const isLoss = m.scoreArgyle < m.scoreOpponent || isPenLoss;
+
+        const resultColor = isWin
+          ? 'text-emerald-400 border-emerald-500/30'
+          : isLoss
+            ? 'text-rose-400 border-rose-500/30'
+            : 'text-amber-400 border-amber-500/30';
+
+        const resultLabel = isWin ? 'W' : isLoss ? 'L' : 'D';
+        const penBadgeColor = isPenWin ? 'text-emerald-300' : 'text-rose-300';
 
         // Determine Home vs Away team names & scores based on venue property
         const homeTeam = m.venue === 'Home' ? 'Plymouth Argyle' : m.opponent;
         const awayTeam = m.venue === 'Home' ? m.opponent : 'Plymouth Argyle';
         const homeScore = m.venue === 'Home' ? m.scoreArgyle : m.scoreOpponent;
         const awayScore = m.venue === 'Home' ? m.scoreOpponent : m.scoreArgyle;
+        const penText = hasPens
+          ? (m.venue === 'Home'
+            ? `(${m.penalties.argyle}-${m.penalties.opponent} pens)`
+            : `(${m.penalties.opponent}-${m.penalties.argyle} pens)`)
+          : '';
 
         return `
           <div onclick="openMatchModal('${m.id}')" class="bg-slate-800 rounded-xl border border-slate-700 hover:border-argyle-gold/50 transition cursor-pointer overflow-hidden shadow-lg hover:shadow-xl group">
@@ -250,7 +296,10 @@
                   <div class="text-lg sm:text-2xl font-black text-white bg-slate-900/80 px-3 py-1 rounded-lg border border-slate-700 tracking-wider">
                     ${homeScore} - ${awayScore}
                   </div>
-                  <span class="text-[10px] font-bold px-2 py-0.5 rounded ${resultColor} bg-slate-900 border mt-1 inline-block">${resultLabel}</span>
+                  <div class="mt-1 flex flex-col items-center gap-0.5">
+                    <span class="text-[10px] font-bold px-2 py-0.5 rounded ${resultColor} bg-slate-900 border inline-block">${resultLabel}</span>
+                    ${hasPens ? `<span class="text-[11px] font-semibold ${penBadgeColor}">${penText}</span>` : ''}
+                  </div>
                 </div>
                 <div class="text-right flex-1 min-w-0">
                   <h3 class="font-bold text-sm sm:text-base text-white group-hover:text-argyle-gold transition truncate" title="${awayTeam}">${awayTeam}</h3>
@@ -266,6 +315,7 @@
       }).join('');
     }
 
+
     function openMatchModal(matchId) {
       const m = appData.matches.find(item => item.id === matchId);
       if (!m) return;
@@ -278,11 +328,24 @@
       const awayScore = m.venue === 'Home' ? m.scoreOpponent : m.scoreArgyle;
 
       // Header
+      const hasPens = m.penalties && typeof m.penalties.argyle === 'number' && typeof m.penalties.opponent === 'number';
+      const isPenWin = hasPens && m.penalties.argyle > m.penalties.opponent;
+      const modalPenText = hasPens
+        ? (m.venue === 'Home'
+          ? `(${m.penalties.argyle}-${m.penalties.opponent} on penalties)`
+          : `(${m.penalties.opponent}-${m.penalties.argyle} on penalties)`)
+        : '';
+      const modalPenColor = isPenWin ? 'text-emerald-300' : 'text-rose-300';
+
+      // Header
       document.getElementById('modal-match-header').innerHTML = `
         <span class="text-xs text-argyle-gold font-bold uppercase tracking-widest">${m.competition} • ${m.date}</span>
         <div class="flex justify-center items-center gap-4 sm:gap-6 my-2">
           <span class="text-base sm:text-xl font-bold text-white text-right flex-1">${homeTeam}</span>
-          <span class="text-2xl sm:text-3xl font-black text-argyle-gold px-3 sm:px-4 py-1 bg-slate-900/90 rounded-xl border border-argyle-gold/30 shrink-0">${homeScore} - ${awayScore}</span>
+          <div class="text-center shrink-0">
+            <span class="text-2xl sm:text-3xl font-black text-argyle-gold px-3 sm:px-4 py-1 bg-slate-900/90 rounded-xl border border-argyle-gold/30 inline-block">${homeScore} - ${awayScore}</span>
+            ${hasPens ? `<p class="text-xs font-semibold ${modalPenColor} mt-1">${modalPenText}</p>` : ''}
+          </div>
           <span class="text-base sm:text-xl font-bold text-white text-left flex-1">${awayTeam}</span>
         </div>
         <p class="text-xs text-slate-400"><i class="fa-solid fa-location-dot mr-1"></i>${m.stadium || 'N/A'}</p>
@@ -543,4 +606,5 @@
     document.addEventListener('DOMContentLoaded', init);
   </script>
 </body>
+
 </html>

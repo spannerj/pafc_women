@@ -164,6 +164,101 @@
   ],
   "matches": [
     {
+      "id": "m_1794955300000",
+      "opponent": "Millwall Lionesses",
+      "date": "2026-10-25",
+      "competition": "Women's FA Cup",
+      "venue": "Home",
+      "scoreArgyle": 1,
+      "scoreOpponent": 1,
+      "penalties": {
+        "argyle": 6,
+        "opponent": 7
+      },
+      "stadium": "Home Park",
+      "captainId": "p2",
+      "startingXi": [
+        "p1",
+        "p_1794437379621",
+        "p5",
+        "p2",
+        "p_1794437724223",
+        "p_1794437744367",
+        "p3",
+        "p7",
+        "p_1794437660678",
+        "p_1794437702194",
+        "p9"
+      ],
+      "unusedSubs": [
+        "p_1794437356583",
+        "p_1794437808681"
+      ],
+      "usedSubs": [
+        "p_1794437529039",
+        "p_1794437587864",
+        "p4"
+      ],
+      "events": [
+        {
+          "id": "e_1794955300001",
+          "type": "SUB",
+          "minute": 12,
+          "playerId": "p_1794437529039",
+          "subOutId": "p_1794437744367",
+          "detail": ""
+        },
+        {
+          "id": "e_1794955300002",
+          "type": "SUB",
+          "minute": 46,
+          "playerId": "p_1794437587864",
+          "subOutId": "p_1794437660678",
+          "detail": ""
+        },
+        {
+          "id": "e_1794955300003",
+          "type": "CARD",
+          "minute": 56,
+          "playerId": "p7",
+          "subOutId": "",
+          "detail": "Yellow"
+        },
+        {
+          "id": "e_1794955300004",
+          "type": "CARD",
+          "minute": 73,
+          "playerId": "p5",
+          "subOutId": "",
+          "detail": "Yellow"
+        },
+        {
+          "id": "e_1794955300005",
+          "type": "SUB",
+          "minute": 74,
+          "playerId": "p4",
+          "subOutId": "p_1794437702194",
+          "detail": ""
+        },
+        {
+          "id": "e_1794955300006",
+          "type": "CARD",
+          "minute": 78,
+          "playerId": "p_1794437724223",
+          "subOutId": "",
+          "detail": "Yellow"
+        },
+        {
+          "id": "e_1794955300007",
+          "type": "GOAL",
+          "minute": 79,
+          "playerId": "p_1794437724223",
+          "subOutId": "",
+          "detail": "Normal"
+        }
+      ]
+    },
+    {
       "id": "m_1794955200000",
       "opponent": "AFC Bournemouth",
       "date": "2026-10-18",
