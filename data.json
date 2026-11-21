@@ -53,7 +53,7 @@
       "id": "p8",
       "name": "Chloe Ingrouille",
       "number": 21,
-      "position": "AT",
+      "position": "MF",
       "active": true
     },
     {
@@ -163,6 +163,160 @@
     }
   ],
   "matches": [
+    {
+      "id": "m_1794955200000",
+      "opponent": "AFC Bournemouth",
+      "date": "2026-10-18",
+      "competition": "FAWNL Premier",
+      "venue": "Home",
+      "scoreArgyle": 0,
+      "scoreOpponent": 5,
+      "stadium": "Home Park",
+      "captainId": "p2",
+      "startingXi": [
+        "p1",
+        "p5",
+        "p2",
+        "p_1794437744367",
+        "p_1794437379621",
+        "p3",
+        "p4",
+        "p_1794437587864",
+        "p_1794437660678",
+        "p8",
+        "p9"
+      ],
+      "unusedSubs": [],
+      "usedSubs": [
+        "p_1794437808681",
+        "p_1794437702194",
+        "p_1794437529039"
+      ],
+      "events": [
+        {
+          "id": "e_1794955200001",
+          "type": "CARD",
+          "minute": 27,
+          "playerId": "p5",
+          "subOutId": "",
+          "detail": "Yellow"
+        },
+        {
+          "id": "e_1794955200002",
+          "type": "SUB",
+          "minute": 64,
+          "playerId": "p_1794437529039",
+          "subOutId": "p_1794437660678",
+          "detail": ""
+        },
+        {
+          "id": "e_1794955200003",
+          "type": "SUB",
+          "minute": 69,
+          "playerId": "p_1794437702194",
+          "subOutId": "p4",
+          "detail": ""
+        },
+        {
+          "id": "e_1794955200004",
+          "type": "SUB",
+          "minute": 80,
+          "playerId": "p_1794437808681",
+          "subOutId": "p2",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "m_1794955100000",
+      "opponent": "Cheltenham Town",
+      "date": "2026-10-11",
+      "competition": "FAWNL Premier",
+      "venue": "Away",
+      "scoreArgyle": 1,
+      "scoreOpponent": 4,
+      "stadium": "Kayte Lane",
+      "captainId": "p2",
+      "startingXi": [
+        "p1",
+        "p5",
+        "p2",
+        "p_1794437744367",
+        "p3",
+        "p4",
+        "p7",
+        "p6",
+        "p_1794437660678",
+        "p_1794437683458",
+        "p9"
+      ],
+      "unusedSubs": [
+        "p_1794437338938",
+        "p_1794437702194"
+      ],
+      "usedSubs": [
+        "p8",
+        "p_1794437529039"
+      ],
+      "events": [
+        {
+          "id": "e_1794955100001",
+          "type": "CARD",
+          "minute": 28,
+          "playerId": "p6",
+          "subOutId": "",
+          "detail": "Yellow"
+        },
+        {
+          "id": "e_1794955100002",
+          "type": "GOAL",
+          "minute": 39,
+          "playerId": "p_1794437744367",
+          "subOutId": "",
+          "detail": "Penalty"
+        },
+        {
+          "id": "e_1794955100003",
+          "type": "SUB",
+          "minute": 39,
+          "playerId": "p8",
+          "subOutId": "p_1794437683458",
+          "detail": ""
+        },
+        {
+          "id": "e_1794955100004",
+          "type": "CARD",
+          "minute": 45,
+          "playerId": "p4",
+          "subOutId": "",
+          "detail": "Yellow"
+        },
+        {
+          "id": "e_1794955100005",
+          "type": "CARD",
+          "minute": 51,
+          "playerId": "p5",
+          "subOutId": "",
+          "detail": "Yellow"
+        },
+        {
+          "id": "e_1794955100006",
+          "type": "CARD",
+          "minute": 75,
+          "playerId": "p8",
+          "subOutId": "",
+          "detail": "Yellow"
+        },
+        {
+          "id": "e_1794955100007",
+          "type": "SUB",
+          "minute": 83,
+          "playerId": "p_1794437529039",
+          "subOutId": "p9",
+          "detail": ""
+        }
+      ]
+    },
     {
       "id": "m_1794954826076",
       "opponent": "Real Bedford",
