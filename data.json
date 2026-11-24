@@ -164,6 +164,249 @@
   ],
   "matches": [
     {
+      "id": "m_1794955600000",
+      "opponent": "Lewes",
+      "date": "2026-11-22",
+      "competition": "FAWNL Premier",
+      "venue": "Away",
+      "scoreArgyle": 0,
+      "scoreOpponent": 3,
+      "stadium": "The Dripping Pan",
+      "captainId": "p2",
+      "startingXi": [
+        "p1",
+        "p5",
+        "p2",
+        "p_1794437724223",
+        "p_1794437394254",
+        "p_1794437744367",
+        "p_1794437379621",
+        "p3",
+        "p_1794437587864",
+        "p7",
+        "p8"
+      ],
+      "unusedSubs": [
+        "p_1794437356583"
+      ],
+      "usedSubs": [
+        "p9",
+        "p_1794437587864",
+        "p_1794437683458",
+        "p_1794437702194"
+      ],
+      "events": [
+        {
+          "id": "e_1794955600001",
+          "type": "SUB",
+          "minute": 46,
+          "playerId": "p9",
+          "subOutId": "p5",
+          "detail": ""
+        },
+        {
+          "id": "e_1794955600002",
+          "type": "SUB",
+          "minute": 62,
+          "playerId": "p_1794437587864",
+          "subOutId": "p_1794437587864",
+          "detail": ""
+        },
+        {
+          "id": "e_1794955600003",
+          "type": "SUB",
+          "minute": 62,
+          "playerId": "p_1794437683458",
+          "subOutId": "p7",
+          "detail": ""
+        },
+        {
+          "id": "e_1794955600004",
+          "type": "SUB",
+          "minute": 72,
+          "playerId": "p_1794437702194",
+          "subOutId": "p_1794437744367",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "m_1794955500000",
+      "opponent": "Hashtag United",
+      "date": "2026-11-08",
+      "competition": "FAWNL Premier",
+      "venue": "Home",
+      "scoreArgyle": 1,
+      "scoreOpponent": 0,
+      "stadium": "Home Park",
+      "captainId": "p2",
+      "startingXi": [
+        "p1",
+        "p_1794437379621",
+        "p_1794437394254",
+        "p5",
+        "p2",
+        "p_1794437724223",
+        "p3",
+        "p_1794437587864",
+        "p_1794437660678",
+        "p8",
+        "p9"
+      ],
+      "unusedSubs": [
+        "p_1794437356583",
+        "p_1794437702194",
+        "p_1794437808681"
+      ],
+      "usedSubs": [
+        "p7",
+        "p_1794437683458",
+        "p4"
+      ],
+      "events": [
+        {
+          "id": "e_1794955500001",
+          "type": "GOAL",
+          "minute": 16,
+          "playerId": "p_1794437724223",
+          "subOutId": "",
+          "detail": "Penalty"
+        },
+        {
+          "id": "e_1794955500002",
+          "type": "SUB",
+          "minute": 40,
+          "playerId": "p7",
+          "subOutId": "p_1794437660678",
+          "detail": ""
+        },
+        {
+          "id": "e_1794955500003",
+          "type": "SUB",
+          "minute": 72,
+          "playerId": "p_1794437683458",
+          "subOutId": "p8",
+          "detail": ""
+        },
+        {
+          "id": "e_1794955500004",
+          "type": "CARD",
+          "minute": 72,
+          "playerId": "p3",
+          "subOutId": "",
+          "detail": "Yellow"
+        },
+        {
+          "id": "e_1794955500005",
+          "type": "SUB",
+          "minute": 84,
+          "playerId": "p4",
+          "subOutId": "p9",
+          "detail": ""
+        }
+      ]
+    },
+    {
+      "id": "m_1794955400000",
+      "opponent": "Exeter City",
+      "date": "2026-10-28",
+      "competition": "FAWNL Premier",
+      "venue": "Away",
+      "scoreArgyle": 1,
+      "scoreOpponent": 5,
+      "stadium": "St James Park",
+      "captainId": "p2",
+      "startingXi": [
+        "p1",
+        "p_1794437379621",
+        "p5",
+        "p2",
+        "p_1794437724223",
+        "p_1794437394254",
+        "p3",
+        "p_1794437587864",
+        "p7",
+        "p8",
+        "p9"
+      ],
+      "unusedSubs": [
+        "p_1794437356583"
+      ],
+      "usedSubs": [
+        "p4",
+        "p_1794437660678",
+        "p_1794437702194",
+        "p_1794437529039",
+        "p_1794437808681"
+      ],
+      "events": [
+        {
+          "id": "e_1794955400001",
+          "type": "SUB",
+          "minute": 45,
+          "playerId": "p_1794437702194",
+          "subOutId": "p7",
+          "detail": ""
+        },
+        {
+          "id": "e_1794955400002",
+          "type": "CARD",
+          "minute": 56,
+          "playerId": "p5",
+          "subOutId": "",
+          "detail": "Yellow"
+        },
+        {
+          "id": "e_1794955400003",
+          "type": "CARD",
+          "minute": 58,
+          "playerId": "p_1794437394254",
+          "subOutId": "",
+          "detail": "Yellow"
+        },
+        {
+          "id": "e_1794955400004",
+          "type": "SUB",
+          "minute": 65,
+          "playerId": "p4",
+          "subOutId": "p2",
+          "detail": ""
+        },
+        {
+          "id": "e_1794955400005",
+          "type": "SUB",
+          "minute": 65,
+          "playerId": "p_1794437660678",
+          "subOutId": "p_1794437394254",
+          "detail": ""
+        },
+        {
+          "id": "e_1794955400006",
+          "type": "GOAL",
+          "minute": 73,
+          "playerId": "p5",
+          "subOutId": "",
+          "detail": "Normal"
+        },
+        {
+          "id": "e_1794955400007",
+          "type": "SUB",
+          "minute": 85,
+          "playerId": "p_1794437529039",
+          "subOutId": "p8",
+          "detail": ""
+        },
+        {
+          "id": "e_1794955400008",
+          "type": "SUB",
+          "minute": 88,
+          "playerId": "p_1794437808681",
+          "subOutId": "p9",
+          "detail": ""
+        }
+      ]
+    },
+    {
       "id": "m_1794955300000",
       "opponent": "Millwall Lionesses",
       "date": "2026-10-25",
@@ -444,6 +687,13 @@
           "minute": 86,
           "playerId": "p8",
           "subOutId": "p4",
+          "detail": ""
+        },
+        {
+          "id": "e_1794954647361",
+          "type": "GOAL",
+          "minute": 30,
+          "playerId": "p3",
           "detail": ""
         },
         {
